@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280"> 
+    <title>The Global Screen | Premium Advertising Grid</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg-deep: #050a0f; 
+            --neon-cyan: #00f2ff;
+            --border-glass: rgba(255, 255, 255, 0.08);
+            --text-muted: #8492a6;
+        }
+
+        /* --- الأنميشن المسؤول عن حركة النبض --- */
+        @keyframes neonPulse {
+            0%, 100% {
+                box-shadow: 0 0 12px rgba(0, 242, 255, 0.4), 0 0 20px rgba(0, 242, 255, 0.1);
+                border-color: rgba(0, 242, 255, 0.6);
+            }
+            50% {
+                box-shadow: 0 0 25px rgba(0, 242, 255, 0.8), 0 0 45px rgba(0, 242, 255, 0.4);
+                border-color: rgba(0, 242, 255, 1);
+            }
+        }
+
+        body {
+            margin: 0; padding: 0;
+            background-color: var(--bg-deep);
+            background-image: radial-gradient(circle at 50% -20%, rgba(0, 242, 255, 0.1), transparent);
+            color: white;
+            font-family: 'Montserrat', sans-serif;
+            width: 1280px; margin: 0 auto;
+            overflow-x: hidden;
+        }
+
+        /* --- Header --- */
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 25px 60px; border-bottom: 1px solid var(--border-glass);
+            background: rgba(5, 10, 15, 0.5); backdrop-filter: blur(10px);
+        }
+        .logo { font-size: 24px; font-weight: 700; }
+        .logo span { color: var(--neon-cyan); text-shadow: 0 0 10px rgba(0, 242, 255, 0.5); }
+        .nav-links { display: flex; gap: 35px; align-items: center; }
+        .nav-links a { color: #cbd5e1; text-decoration: none; font-size: 11px; text-transform: uppercase; font-weight: 600; transition: 0.3s; }
+        .nav-links a:hover { color: var(--neon-cyan); }
+        .login-box { border: 1px solid rgba(255,255,255,0.2); padding: 8px 22px; border-radius: 8px; background: rgba(255,255,255,0.03); transition: 0.3s; }
+        .login-box:hover { background: white; color: black !important; }
+
+        /* --- Stats Row --- */
+        .stats-row { display: flex; justify-content: space-between; align-items: center; padding: 50px 60px; }
+        .search-box { width: 400px; position: relative; }
+        .search-box input {
+            width: 100%; background: rgba(0,0,0,0.3); border: 2px solid var(--neon-cyan);
+            padding: 15px 45px; border-radius: 12px; color: white; outline: none;
+            font-family: inherit;
+            /* حركة نبض خفيفة لصندوق البحث */
+            animation: neonPulse 3s infinite ease-in-out;
+        }
+        .search-box i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--neon-cyan); }
+
+        .metrics { display: flex; gap: 60px; }
+        .metric-item { text-align: left; }
+        .label { display: block; color: var(--text-muted); font-size: 10px; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px; }
+        .val { font-size: 30px; font-weight: 700; color: #f8fafc; }
+        /* الخط المتوهج تحت الأرقام */
+        .metric-item::after { 
+            content: ''; display: block; width: 40px; height: 3px; 
+            background: var(--neon-cyan); margin-top: 10px; border-radius: 2px;
+            box-shadow: 0 0 15px var(--neon-cyan);
+        }
+
+        /* --- Grid Container (Empty for your Image) --- */
+        .grid-frame {
+            margin: 0 60px; height: 650px; 
+            border: 1px solid var(--border-glass); border-radius: 24px;
+            background: linear-gradient(145deg, #0a0e14, #05080c);
+            position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+            overflow: hidden; display: flex; align-items: center; justify-content: center;
+        }
+        .grid-frame::before {
+            content: ''; position: absolute; inset: 0;
+            background-image: radial-gradient(rgba(0, 242, 255, 0.08) 1.5px, transparent 1.5px);
+            background-size: 30px 30px;
+        }
+
+        /* --- Interaction Area --- */
+        .interaction-area { display: flex; justify-content: center; align-items: center; padding: 60px 60px 100px; position: relative; }
+        .trending-pill {
+            position: absolute; left: 60px;
+            background: rgba(15, 23, 42, 0.6); border: 1px solid var(--border-glass);
+            padding: 12px 26px; border-radius: 50px;
+            display: flex; align-items: center; gap: 12px;
+            font-size: 11px; font-weight: 600; color: #a1aab7; letter-spacing: 1.2px;
+            backdrop-filter: blur(8px);
+        }
+        .trending-pill i { color: var(--neon-cyan); }
+
+        /* زر "Claim Your Spot" المطور مع حركة النبض القوية */
+        .btn-claim {
+            background: linear-gradient(135deg, #0f151e 0%, #05080b 100%); 
+            color: #fff; border: 2.5px solid var(--neon-cyan);
+            padding: 26px 95px; border-radius: 16px; font-size: 19px; font-weight: 800;
+            cursor: pointer; text-transform: uppercase; transition: 0.4s; letter-spacing: 2px;
+            animation: neonPulse 2s infinite ease-in-out;
+        }
+        .btn-claim:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0, 242, 255, 0.4); color: var(--neon-cyan); }
+
+        /* --- Modal System --- */
+        .modal-overlay {
+            position: fixed; inset: 0; background: rgba(2, 6, 23, 0.95);
+            display: none; justify-content: center; align-items: center; z-index: 2000;
+            backdrop-filter: blur(12px);
+        }
+        .modal-content {
+            background: #0f172a; border: 2px solid var(--neon-cyan);
+            padding: 60px; border-radius: 35px; width: 480px; text-align: center;
+            box-shadow: 0 0 50px rgba(0, 242, 255, 0.2);
+        }
+        .modal-content h2 { color: white; margin-bottom: 30px; text-transform: uppercase; }
+        .modal-content input {
+            width: 100%; padding: 18px; margin: 12px 0; background: rgba(0,0,0,0.5);
+            border: 1px solid #1e293b; color: white; border-radius: 14px; box-sizing: border-box; outline: none;
+        }
+        .btn-google {
+            background: white; color: black; border: none; padding: 18px;
+            width: 100%; border-radius: 14px; font-weight: 700; cursor: pointer;
+            display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 25px;
+        }
+
+        /* --- Certificate --- */
+        #certView {
+            position: fixed; inset: 0; background: #020617; display: none;
+            flex-direction: column; justify-content: center; align-items: center; z-index: 3000;
+        }
+        .cert-card {
+            width: 900px; height: 600px; background: #080b12; border: 2px solid var(--neon-cyan);
+            padding: 40px; position: relative;
+        }
+        .cert-inner { border: 1px solid rgba(0, 242, 255, 0.1); height: 100%; display: flex; flex-direction: column; justify-content: center; text-align: center; }
+        .cert-user { font-size: 60px; color: var(--neon-cyan); text-transform: uppercase; margin: 35px 0; font-weight: 800; }
+
+        /* --- Footer --- */
+        footer { background: #020617; padding: 80px 60px; border-top: 1px solid var(--border-glass); }
+        .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.5fr; gap: 60px; }
+        .f-col h4 { color: var(--neon-cyan); font-size: 13px; text-transform: uppercase; margin-bottom: 30px; }
+        .f-col ul { list-style: none; padding: 0; }
+        .f-col ul li { margin-bottom: 18px; }
+        .f-col ul li a { color: #64748b; text-decoration: none; font-size: 14px; transition: 0.3s; }
+        .f-col ul li a:hover { color: var(--neon-cyan); padding-left: 5px; }
+        .social-icons { display: flex; gap: 15px; margin-top: 30px; }
+        .social-icons a { 
+            width: 45px; height: 45px; border-radius: 12px; background: rgba(255,255,255,0.03); 
+            border: 1px solid var(--border-glass); display: flex; align-items: center; justify-content: center; 
+            color: #94a3b8; text-decoration: none; transition: 0.3s; 
+        }
+        .social-icons a:hover { border-color: var(--neon-cyan); color: white; transform: translateY(-3px); }
+
+        .footer-bottom { border-top: 1px solid #1e293b; padding-top: 40px; margin-top: 60px; display: flex; justify-content: space-between; font-size: 12px; color: #475569; }
+        .kinan-tag { color: var(--neon-cyan); text-decoration: none; font-weight: 600; }
+        .status-dot { height: 8px; width: 8px; background-color: #00ff88; border-radius: 50%; display: inline-block; margin-right: 7px; box-shadow: 0 0 10px #00ff88; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="logo"><span>The</span> Global Screen</div>
+        <div class="nav-links">
+            <a href="#">Latest News</a>
+            <a href="#">Follow Us</a>
+            <a href="#">About Us</a>
+            <a href="#">Contact Us</a>
+            <a href="#" class="login-box">LOGIN</a>
+        </div>
+    </header>
+
+    <div class="stats-row">
+        <div class="search-box">
+            <i class="fa-solid fa-magnifying-glass"></i>
+            <input type="text" placeholder="Search pixels...">
+        </div>
+        <div class="metrics">
+            <div class="metric-item"><span class="label">Total Visitors</span><span class="val">1,240,500</span></div>
+            <div class="metric-item"><span class="label">Available Pixels</span><span class="val">450,000</span></div>
+            <div class="metric-item"><span class="label">Current Price</span><span class="val">$1.00 <span style="font-size:14px; color:#475569;">/ px</span></span></div>
+        </div>
+    </div>
+
+    <div class="grid-frame">
+        <span style="color: rgba(255,255,255,0.1); font-size: 14px; letter-spacing: 2px;">GRID AREA READY FOR IMAGE</span>
+    </div>
+
+    <div class="interaction-area">
+        <div class="trending-pill">
+            <i class="fa-solid fa-fire-flame-curved"></i>
+            <span>TOP 25 MOST CLICKED SPACES</span>
+        </div>
+        <button class="btn-claim" id="openModal">Claim Your Spot Now</button>
+    </div>
+
+    <div class="modal-overlay" id="overlay">
+        <div class="modal-content">
+            <h2 id="mTitle">Account Access</h2>
+            <div id="step1">
+                <button class="btn-google" onclick="goNext()"><i class="fa-brands fa-google" style="color: #4285F4;"></i> Continue with Google</button>
+            </div>
+            <div id="step2" style="display:none;">
+                <input type="text" id="userName" placeholder="Enter Your Full Name">
+                <input type="text" placeholder="Link (Social or Website)">
+                <button class="btn-claim" style="width:100%; margin-top:20px; padding: 18px; font-size: 16px;" onclick="generate()">Finalize Ownership</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="certView">
+        <div class="cert-card">
+            <div class="cert-inner">
+                <p style="letter-spacing:8px; color:#475569; font-size:12px;">OFFICIAL DIGITAL ASSET CERTIFICATE</p>
+                <div class="cert-user" id="targetName">USER NAME</div>
+                <p style="color:#94a3b8; max-width: 500px; margin: 0 auto; line-height: 1.6;">This document verifies ownership in the premium advertising grid of The Global Screen.</p>
+                <div style="margin-top:70px; display:flex; justify-content:space-around; font-size:12px; color:#475569;">
+                    <div>CERTIFICATE ID<br><span style="color:white; font-weight:700;">#2026-TGS-10001</span></div>
+                    <div>ISSUED BY<br><span style="font-family:cursive; color:var(--neon-cyan); font-size:20px;">Kinan Alsalman</span></div>
+                    <div>DATE<br><span style="color:white; font-weight:700;">OCTOBER 26, 2026</span></div>
+                </div>
+            </div>
+        </div>
+        <button class="btn-claim" style="margin-top:40px; padding: 15px 50px; font-size: 14px;" onclick="location.reload()">Back to Grid</button>
+    </div>
+
+    <footer>
+        <div class="footer-grid">
+            <div class="f-col">
+                <div class="logo"><span>The</span> Global Screen</div>
+                <p style="color:#64748b; font-size:13px; margin-top:20px; line-height:1.8;">The world's first decentralized digital advertising wall. Secure your legacy on the global grid.</p>
+                <div class="social-icons">
+                    <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
+                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="#"><i class="fa-brands fa-discord"></i></a>
+                </div>
+            </div>
+            <div class="f-col">
+                <h4>Resources</h4>
+                <ul><li><a href="#">How it works</a></li><li><a href="#">Pixel Map</a></li><li><a href="#">API Documentation</a></li></ul>
+            </div>
+            <div class="f-col">
+                <h4>Legal</h4>
+                <ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li><li><a href="#">Refund Policy</a></li></ul>
+            </div>
+            <div class="f-col">
+                <h4>Trust & Security</h4>
+                <div style="color:#64748b; font-size:13px; line-height:3.0;">
+                    <p><i class="fa-solid fa-circle-check" style="color:var(--neon-cyan);"></i> Official Art Digital Project</p>
+                    <p><i class="fa-brands fa-stripe" style="font-size:20px; color: white;"></i> Verified Payments</p>
+                    <p><i class="fa-solid fa-shield-halved"></i> SSL 256-bit Encryption</p>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <div>&copy; 2026 The Global Screen. Managed by <a href="#" class="kinan-tag">Kinan Alslman</a>.</div>
+            <div><span class="status-dot"></span> Status: <span style="color:#00ff88;">Operational</span> &nbsp;&nbsp; v1.2.5</div>
+        </div>
+    </footer>
+
+    <script>
+        const overlay = document.getElementById('overlay');
+        document.getElementById('openModal').onclick = () => overlay.style.display = 'flex';
+
+        function goNext() {
+            document.getElementById('step1').style.display = 'none';
+            document.getElementById('step2').style.display = 'block';
+            document.getElementById('mTitle').innerText = "Finalize Ownership";
+        }
+
+        function generate() {
+            const name = document.getElementById('userName').value;
+            if(!name) return alert("Please enter your name!");
+            document.getElementById('targetName').innerText = name.toUpperCase();
+            overlay.style.display = 'none';
+            document.getElementById('certView').style.display = 'flex';
+        }
+
+        window.onclick = (e) => { if(e.target == overlay) overlay.style.display = 'none'; }
+    </script>
+</body>
+</html>
