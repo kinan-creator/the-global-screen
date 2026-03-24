@@ -294,9 +294,9 @@
                 <div class="pixel-size-box">
                     <label>Select Your Space Size (min 10×10)</label>
                     <div class="size-inputs">
-                        <input type="number" id="pixelW" placeholder="W" min="10" value="10">
+                        <input type="number" id="pixelW" placeholder="W" value="10">
                         <span>×</span>
-                        <input type="number" id="pixelH" placeholder="H" min="10" value="10">
+                        <input type="number" id="pixelH" placeholder="H" value="10">
                         <span style="font-size:13px; color: var(--text-muted);">px</span>
                     </div>
                     <div class="pixel-summary">
@@ -499,9 +499,8 @@
             document.getElementById('sizeLabel').textContent = w + '×' + h;
         }
 
-        document.getElementById('pixelW').addEventListener('input', updatePixelCalc);
-        document.getElementById('pixelH').addEventListener('input', updatePixelCalc);
-
+        document.getElementById('pixelW').addEventListener('blur', updatePixelCalc);
+        document.getElementById('pixelH').addEventListener('blur', updatePixelCalc);
         fileInput.onchange = () => { if (fileInput.files[0]) fileName.textContent = '✓ ' + fileInput.files[0].name; };
 
         document.getElementById('btnPaypal').onclick = () => processClaim('PayPal');
