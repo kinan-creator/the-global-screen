@@ -117,6 +117,7 @@
             background: #0f172a; border: 2px solid var(--neon-cyan);
             padding: 60px; border-radius: 35px; width: 480px; text-align: center;
             box-shadow: 0 0 50px rgba(0, 242, 255, 0.2);
+            max-height: 90vh; overflow-y: auto;
         }
         .modal-content h2 { color: white; margin-bottom: 10px; text-transform: uppercase; }
         .modal-content p { color: var(--text-muted); font-size: 13px; margin-bottom: 30px; }
@@ -160,6 +161,41 @@
         .upload-label i { display: block; font-size: 24px; margin-bottom: 8px; color: var(--neon-cyan); }
         #fileInput { display: none; }
         #fileName { font-size: 11px; color: #4ade80; margin-top: 5px; }
+
+        /* --- Pixel Size Selector --- */
+        .pixel-size-box {
+            background: rgba(0,0,0,0.3); border: 1px solid #1e293b;
+            border-radius: 14px; padding: 20px; margin: 15px 0; text-align: left;
+        }
+        .pixel-size-box label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 12px; }
+        .size-inputs { display: flex; gap: 10px; align-items: center; }
+        .size-inputs input {
+            width: 80px; padding: 12px; text-align: center; margin: 0;
+            font-size: 16px; font-weight: 700;
+        }
+        .size-inputs span { color: var(--text-muted); font-size: 18px; }
+        .pixel-summary {
+            margin-top: 15px; padding: 15px; background: rgba(0, 242, 255, 0.05);
+            border: 1px solid rgba(0, 242, 255, 0.2); border-radius: 10px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .pixel-summary .ps-item { text-align: center; }
+        .pixel-summary .ps-label { font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 4px; }
+        .pixel-summary .ps-val { font-size: 16px; font-weight: 800; color: var(--neon-cyan); }
+
+        /* --- Payment Buttons --- */
+        .payment-section { margin-top: 15px; }
+        .payment-section p { font-size: 11px; color: var(--text-muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+        .payment-btns { display: flex; gap: 10px; }
+        .pay-btn {
+            flex: 1; padding: 14px; border-radius: 12px; cursor: pointer;
+            border: 1px solid #1e293b; background: #0a0e14; color: white;
+            font-size: 13px; font-weight: 700; transition: 0.3s;
+            display: flex; align-items: center; justify-content: center; gap: 8px;
+        }
+        .pay-btn.paypal:hover { border-color: #0070ba; color: #0070ba; }
+        .pay-btn.stripe:hover { border-color: #635bff; color: #635bff; }
+        .pay-btn i { font-size: 18px; }
 
         /* user info bar */
         .user-bar {
@@ -216,7 +252,6 @@
         </div>
     </header>
 
-    <!-- user bar (تظهر بعد تسجيل الدخول) -->
     <div style="padding: 10px 60px; display: none;" id="userBarWrap">
         <div class="user-bar" id="userBar">
             <img id="userAvatar" src="" alt="">
@@ -231,9 +266,18 @@
             <input type="text" placeholder="Search pixels...">
         </div>
         <div class="metrics">
-            <div class="metric-item"><span class="label">Total Visitors</span><span class="val">1,240,500</span></div>
-            <div class="metric-item"><span class="label">Available Pixels</span><span class="val">450,000</span></div>
-            <div class="metric-item"><span class="label">Current Price</span><span class="val">$1.00 <span style="font-size:14px; color:#475569;">/ px</span></span></div>
+            <div class="metric-item">
+                <span class="label">Total Visitors</span>
+                <span class="val" id="visitorsCount">...</span>
+            </div>
+            <div class="metric-item">
+                <span class="label">Available Pixels</span>
+                <span class="val" id="pixelsCount">...</span>
+            </div>
+            <div class="metric-item">
+                <span class="label">Current Price</span>
+                <span class="val">$1.00 <span style="font-size:14px; color:#475569;">/ px</span></span>
+            </div>
         </div>
     </div>
 
@@ -253,7 +297,7 @@
     <div class="modal-overlay" id="overlay">
         <div class="modal-content">
 
-            <!-- STEP 1: تسجيل الدخول -->
+            <!-- STEP 1: \u062a\u0633\u062c\u064a\u0644 \u0627\u0644\u062f\u062e\u0648\u0644 -->
             <div id="step1">
                 <h2>Account Access</h2>
                 <p>Sign in to claim your spot on the global grid</p>
@@ -273,7 +317,7 @@
                 <button class="btn-submit" style="background: transparent; color: var(--neon-cyan); border: 2px solid var(--neon-cyan); margin-top: 10px;" id="btnEmailRegister">Create Account</button>
             </div>
 
-            <!-- STEP 2: تعبئة البيانات -->
+            <!-- STEP 2: \u062a\u0639\u0628\u0626\u0629 \u0627\u0644\u0628\u064a\u0627\u0646\u0627\u062a -->
             <div id="step2" style="display:none;">
                 <h2>Claim Your Spot</h2>
                 <p>Fill in your details to complete ownership</p>
@@ -288,8 +332,45 @@
                 <input type="file" id="fileInput" accept="image/*">
                 <div id="fileName"></div>
 
+                <!-- Pixel Size Selector -->
+                <div class="pixel-size-box">
+                    <label>Select Your Space Size (min 10\u00d710)</label>
+                    <div class="size-inputs">
+                        <input type="number" id="pixelW" placeholder="W" min="10" value="10">
+                        <span>\u00d7</span>
+                        <input type="number" id="pixelH" placeholder="H" min="10" value="10">
+                        <span style="font-size:13px; color: var(--text-muted);">pixels</span>
+                    </div>
+                    <div class="pixel-summary">
+                        <div class="ps-item">
+                            <span class="ps-label">Total Pixels</span>
+                            <span class="ps-val" id="totalPixels">100</span>
+                        </div>
+                        <div class="ps-item">
+                            <span class="ps-label">Price</span>
+                            <span class="ps-val" id="totalPrice">$100</span>
+                        </div>
+                        <div class="ps-item">
+                            <span class="ps-label">Size</span>
+                            <span class="ps-val" id="sizeLabel">10\u00d710</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Payment -->
+                <div class="payment-section">
+                    <p>Choose Payment Method</p>
+                    <div class="payment-btns">
+                        <button class="pay-btn paypal" id="btnPaypal">
+                            <i class="fa-brands fa-paypal"></i> PayPal
+                        </button>
+                        <button class="pay-btn stripe" id="btnStripe">
+                            <i class="fa-brands fa-stripe"></i> Stripe
+                        </button>
+                    </div>
+                </div>
+
                 <div class="error-msg" id="claimError"></div>
-                <button class="btn-submit" id="btnFinalize">Finalize Ownership</button>
             </div>
 
         </div>
@@ -350,216 +431,4 @@
 
     <script>
         // ====== EMAILJS INIT ======
-        emailjs.init('ew1xo1RoaHDx1re7b');
-
-        // ====== SUPABASE INIT ======
-        const { createClient } = supabase;
-        const sb = createClient(
-            'https://srrsldjzjdpbewgjloli.supabase.co',
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNycnNsZGp6amRwYmV3Z2psb2xpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2NTE0NDAsImV4cCI6MjA4OTIyNzQ0MH0._A1CxeH923sE782EntqHIcwqXSInH7cQdtmxrsEdjPQ'
-        );
-
-        // ====== ELEMENTS ======
-        const overlay      = document.getElementById('overlay');
-        const step1        = document.getElementById('step1');
-        const step2        = document.getElementById('step2');
-        const authError    = document.getElementById('authError');
-        const authSuccess  = document.getElementById('authSuccess');
-        const claimError   = document.getElementById('claimError');
-        const userBarWrap  = document.getElementById('userBarWrap');
-        const userBar      = document.getElementById('userBar');
-        const userEmail    = document.getElementById('userEmail');
-        const userAvatar   = document.getElementById('userAvatar');
-        const fileInput    = document.getElementById('fileInput');
-        const fileName     = document.getElementById('fileName');
-
-        // ====== CHECK SESSION ON LOAD ======
-        sb.auth.getSession().then(({ data: { session } }) => {
-            if (session) showUserBar(session.user);
-        });
-
-        // ====== AUTH STATE CHANGE ======
-        sb.auth.onAuthStateChange((event, session) => {
-            if (session) {
-                showUserBar(session.user);
-                // بعد تسجيل الدخول بجوجل، افتح step2 مباشرة
-                if (event === 'SIGNED_IN' && overlay.style.display === 'flex') {
-                    step1.style.display = 'none';
-                    step2.style.display = 'block';
-                }
-            } else {
-                hideUserBar();
-            }
-        });
-
-        function showUserBar(user) {
-            userBarWrap.style.display = 'block';
-            userBar.style.display = 'flex';
-            userEmail.textContent = user.email || user.user_metadata?.full_name || 'User';
-            userAvatar.src = user.user_metadata?.avatar_url || '';
-            if (!userAvatar.src) userAvatar.style.display = 'none';
-            document.getElementById('loginBtn').textContent = 'MY ACCOUNT';
-        }
-
-        function hideUserBar() {
-            userBarWrap.style.display = 'none';
-            document.getElementById('loginBtn').textContent = 'LOGIN';
-        }
-
-        // ====== OPEN MODAL ======
-        document.getElementById('openModal').onclick = async () => {
-            const { data: { session } } = await sb.auth.getSession();
-            if (session) {
-                // مسجل دخوله، انتقل لـ step2 مباشرة
-                step1.style.display = 'none';
-                step2.style.display = 'block';
-            } else {
-                step1.style.display = 'block';
-                step2.style.display = 'none';
-            }
-            overlay.style.display = 'flex';
-        };
-
-        document.getElementById('loginBtn').onclick = (e) => {
-            e.preventDefault();
-            overlay.style.display = 'flex';
-        };
-
-        window.onclick = (e) => { if (e.target == overlay) overlay.style.display = 'none'; };
-
-        // ====== GOOGLE LOGIN ======
-        document.getElementById('btnGoogle').onclick = async () => {
-            const { error } = await sb.auth.signInWithOAuth({
-                provider: 'google',
-                options: { redirectTo: window.location.href }
-            });
-            if (error) showError(authError, error.message);
-        };
-
-        // ====== EMAIL LOGIN ======
-        document.getElementById('btnEmailLogin').onclick = async () => {
-            const email = document.getElementById('emailInput').value.trim();
-            const pass  = document.getElementById('passwordInput').value;
-            if (!email || !pass) return showError(authError, 'Please fill in all fields.');
-
-            setBtnLoading('btnEmailLogin', true);
-            const { error } = await sb.auth.signInWithPassword({ email, password: pass });
-            setBtnLoading('btnEmailLogin', false);
-
-            if (error) {
-                showError(authError, error.message);
-            } else {
-                step1.style.display = 'none';
-                step2.style.display = 'block';
-            }
-        };
-
-        // ====== EMAIL REGISTER ======
-        document.getElementById('btnEmailRegister').onclick = async () => {
-            const email = document.getElementById('emailInput').value.trim();
-            const pass  = document.getElementById('passwordInput').value;
-            if (!email || !pass) return showError(authError, 'Please fill in all fields.');
-            if (pass.length < 6) return showError(authError, 'Password must be at least 6 characters.');
-
-            setBtnLoading('btnEmailRegister', true);
-            const { error } = await sb.auth.signUp({ email, password: pass });
-            setBtnLoading('btnEmailRegister', false);
-
-            if (error) {
-                showError(authError, error.message);
-            } else {
-                showSuccess(authSuccess, 'Account created! Check your email to confirm, then login.');
-            }
-        };
-
-        // ====== FILE UPLOAD PREVIEW ======
-        fileInput.onchange = () => {
-            if (fileInput.files[0]) {
-                fileName.textContent = '✓ ' + fileInput.files[0].name;
-            }
-        };
-
-        // ====== FINALIZE CLAIM ======
-        document.getElementById('btnFinalize').onclick = async () => {
-            const name = document.getElementById('userName').value.trim();
-            const link = document.getElementById('userLink').value.trim();
-            const file = fileInput.files[0];
-
-            if (!name) return showError(claimError, 'Please enter your name.');
-            if (!file) return showError(claimError, 'Please upload an image.');
-
-            setBtnLoading('btnFinalize', true);
-
-            // 1) رفع الصورة لـ Supabase Storage
-            const fileExt  = file.name.split('.').pop();
-            const filePath = `${Date.now()}-${Math.random().toString(36).slice(2)}.${fileExt}`;
-
-            const { error: uploadError } = await sb.storage
-                .from('pixel-images')
-                .upload(filePath, file);
-
-            if (uploadError) {
-                setBtnLoading('btnFinalize', false);
-                return showError(claimError, 'Image upload failed: ' + uploadError.message);
-            }
-
-            // 2) جلب الـ public URL للصورة
-            const { data: urlData } = sb.storage
-                .from('pixel-images')
-                .getPublicUrl(filePath);
-
-            const imageUrl = urlData.publicUrl;
-
-            // 3) حفظ البيانات في جدول blocks
-            const { error: dbError } = await sb.from('blocks').insert([{
-                user_name:   name,
-                pixel_link:  link,
-                image_url:   imageUrl
-            }]);
-
-            setBtnLoading('btnFinalize', false);
-
-            if (dbError) {
-                return showError(claimError, 'Save failed: ' + dbError.message);
-            }
-
-            // 4) إرسال إيميل
-            const { data: { user } } = await sb.auth.getUser();
-            await emailjs.send('service_26ecvjv', 'template_t250i1z', {
-                user_name:  name,
-                user_email: user ? user.email : 'Unknown',
-                user_link:  link,
-                image_url:  imageUrl
-            });
-
-            // 5) إظهار الشهادة
-            document.getElementById('targetName').innerText = name.toUpperCase();
-            overlay.style.display = 'none';
-            document.getElementById('certView').style.display = 'flex';
-        };
-
-        // ====== LOGOUT ======
-        document.getElementById('logoutBtn').onclick = async () => {
-            await sb.auth.signOut();
-        };
-
-        // ====== HELPERS ======
-        function showError(el, msg) {
-            el.textContent = msg;
-            el.style.display = 'block';
-            setTimeout(() => el.style.display = 'none', 5000);
-        }
-
-        function showSuccess(el, msg) {
-            el.textContent = msg;
-            el.style.display = 'block';
-        }
-
-        function setBtnLoading(id, loading) {
-            const btn = document.getElementById(id);
-            btn.disabled = loading;
-            btn.textContent = loading ? 'Please wait...' : btn.dataset.label || btn.textContent;
-        }
-    </script>
-</body>
-</html>
+        emailjs.init('ew1xo1RoaHDx
