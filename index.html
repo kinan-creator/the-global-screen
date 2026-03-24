@@ -415,7 +415,8 @@
         }
 
         async function trackVisit() {
-            await sb.rpc('increment_visits');
+            const { data: vv } = await sb.from('visits').select('count').eq('id',1).single();
+if(vv) await sb.from('visits').update({ count: vv.count + 1 }).eq('id',1);
             loadCounters();
         }
 
@@ -548,7 +549,8 @@
                 return showError(claimError, 'Save failed: ' + dbError.message);
             }
 
-            await sb.rpc('decrement_pixels', { amount: totalPixels });
+            const { data: pp } = await sb.from('pixels').select('count').eq('id',1).single();
+if(pp) await sb.from('pixels').update({ count: pp.count - totalPixels }).eq('id',1);
             loadCounters();
 
             const { data: { user } } = await sb.auth.getUser();
