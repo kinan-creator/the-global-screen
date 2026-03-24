@@ -37,7 +37,6 @@
             overflow-x: hidden;
         }
 
-        /* --- Header --- */
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 25px 60px; border-bottom: 1px solid var(--border-glass);
@@ -51,31 +50,22 @@
         .login-box { border: 1px solid rgba(255,255,255,0.2); padding: 8px 22px; border-radius: 8px; background: rgba(255,255,255,0.03); transition: 0.3s; cursor: pointer; }
         .login-box:hover { background: white; color: black !important; }
 
-        /* --- Stats Row --- */
         .stats-row { display: flex; justify-content: space-between; align-items: center; padding: 50px 60px; }
         .search-box { width: 400px; position: relative; }
         .search-box input {
             width: 100%; background: rgba(0,0,0,0.3); border: 2px solid var(--neon-cyan);
             padding: 15px 45px; border-radius: 12px; color: white; outline: none;
-            font-family: inherit;
-            animation: neonPulse 3s infinite ease-in-out;
+            font-family: inherit; animation: neonPulse 3s infinite ease-in-out;
         }
         .search-box i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--neon-cyan); }
-
         .metrics { display: flex; gap: 60px; }
         .metric-item { text-align: left; }
         .label { display: block; color: var(--text-muted); font-size: 10px; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px; }
         .val { font-size: 30px; font-weight: 700; color: #f8fafc; }
-        .metric-item::after { 
-            content: ''; display: block; width: 40px; height: 3px; 
-            background: var(--neon-cyan); margin-top: 10px; border-radius: 2px;
-            box-shadow: 0 0 15px var(--neon-cyan);
-        }
+        .metric-item::after { content: ''; display: block; width: 40px; height: 3px; background: var(--neon-cyan); margin-top: 10px; border-radius: 2px; box-shadow: 0 0 15px var(--neon-cyan); }
 
-        /* --- Grid --- */
         .grid-frame {
-            margin: 0 60px; height: 650px; 
-            border: 1px solid var(--border-glass); border-radius: 24px;
+            margin: 0 60px; height: 650px; border: 1px solid var(--border-glass); border-radius: 24px;
             background: linear-gradient(145deg, #0a0e14, #05080c);
             position: relative; box-shadow: 0 20px 60px rgba(0,0,0,0.6);
             overflow: hidden; display: flex; align-items: center; justify-content: center;
@@ -86,7 +76,6 @@
             background-size: 30px 30px;
         }
 
-        /* --- Interaction Area --- */
         .interaction-area { display: flex; justify-content: center; align-items: center; padding: 60px 60px 100px; position: relative; }
         .trending-pill {
             position: absolute; left: 60px;
@@ -97,7 +86,6 @@
             backdrop-filter: blur(8px);
         }
         .trending-pill i { color: var(--neon-cyan); }
-
         .btn-claim {
             background: linear-gradient(135deg, #0f151e 0%, #05080b 100%); 
             color: #fff; border: 2.5px solid var(--neon-cyan);
@@ -107,7 +95,6 @@
         }
         .btn-claim:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0, 242, 255, 0.4); color: var(--neon-cyan); }
 
-        /* --- Modal --- */
         .modal-overlay {
             position: fixed; inset: 0; background: rgba(2, 6, 23, 0.95);
             display: none; justify-content: center; align-items: center; z-index: 2000;
@@ -127,7 +114,6 @@
             box-sizing: border-box; outline: none; font-family: inherit; font-size: 14px;
         }
         .modal-content input:focus { border-color: var(--neon-cyan); }
-
         .btn-google {
             background: white; color: black; border: none; padding: 18px;
             width: 100%; border-radius: 14px; font-weight: 700; cursor: pointer;
@@ -135,10 +121,8 @@
             margin-bottom: 20px; font-size: 15px; transition: 0.3s;
         }
         .btn-google:hover { opacity: 0.9; transform: translateY(-2px); }
-
         .divider { display: flex; align-items: center; gap: 15px; margin: 15px 0; color: #334155; font-size: 12px; }
         .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #1e293b; }
-
         .btn-submit {
             background: var(--neon-cyan); color: #000; border: none;
             width: 100%; padding: 18px; border-radius: 14px; font-weight: 800;
@@ -147,11 +131,9 @@
         }
         .btn-submit:hover { opacity: 0.85; transform: translateY(-2px); }
         .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-
         .error-msg { color: #f87171; font-size: 12px; margin-top: 10px; display: none; }
         .success-msg { color: #4ade80; font-size: 12px; margin-top: 10px; display: none; }
 
-        /* upload area */
         .upload-label {
             display: block; padding: 20px; border: 2px dashed #1e293b;
             border-radius: 14px; margin: 10px 0; cursor: pointer; color: var(--text-muted);
@@ -162,30 +144,25 @@
         #fileInput { display: none; }
         #fileName { font-size: 11px; color: #4ade80; margin-top: 5px; }
 
-        /* --- Pixel Size Selector --- */
         .pixel-size-box {
             background: rgba(0,0,0,0.3); border: 1px solid #1e293b;
             border-radius: 14px; padding: 20px; margin: 15px 0; text-align: left;
         }
-        .pixel-size-box label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 12px; }
+        .pixel-size-box > label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 12px; }
         .size-inputs { display: flex; gap: 10px; align-items: center; }
-        .size-inputs input {
-            width: 80px; padding: 12px; text-align: center; margin: 0;
-            font-size: 16px; font-weight: 700;
-        }
+        .size-inputs input { width: 80px; padding: 12px; text-align: center; margin: 0; font-size: 16px; font-weight: 700; }
         .size-inputs span { color: var(--text-muted); font-size: 18px; }
         .pixel-summary {
             margin-top: 15px; padding: 15px; background: rgba(0, 242, 255, 0.05);
             border: 1px solid rgba(0, 242, 255, 0.2); border-radius: 10px;
             display: flex; justify-content: space-between; align-items: center;
         }
-        .pixel-summary .ps-item { text-align: center; }
-        .pixel-summary .ps-label { font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 4px; }
-        .pixel-summary .ps-val { font-size: 16px; font-weight: 800; color: var(--neon-cyan); }
+        .ps-item { text-align: center; }
+        .ps-label { font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 4px; }
+        .ps-val { font-size: 16px; font-weight: 800; color: var(--neon-cyan); }
 
-        /* --- Payment Buttons --- */
         .payment-section { margin-top: 15px; }
-        .payment-section p { font-size: 11px; color: var(--text-muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+        .payment-section > p { font-size: 11px; color: var(--text-muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
         .payment-btns { display: flex; gap: 10px; }
         .pay-btn {
             flex: 1; padding: 14px; border-radius: 12px; cursor: pointer;
@@ -196,8 +173,8 @@
         .pay-btn.paypal:hover { border-color: #0070ba; color: #0070ba; }
         .pay-btn.stripe:hover { border-color: #635bff; color: #635bff; }
         .pay-btn i { font-size: 18px; }
+        .pay-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        /* user info bar */
         .user-bar {
             display: none; align-items: center; gap: 12px;
             background: rgba(0, 242, 255, 0.05); border: 1px solid rgba(0,242,255,0.2);
@@ -207,19 +184,14 @@
         .btn-logout { margin-left: auto; background: none; border: 1px solid #334155; color: #94a3b8; padding: 4px 12px; border-radius: 6px; cursor: pointer; font-size: 11px; }
         .btn-logout:hover { border-color: #f87171; color: #f87171; }
 
-        /* --- Certificate --- */
         #certView {
             position: fixed; inset: 0; background: #020617; display: none;
             flex-direction: column; justify-content: center; align-items: center; z-index: 3000;
         }
-        .cert-card {
-            width: 900px; height: 600px; background: #080b12; border: 2px solid var(--neon-cyan);
-            padding: 40px; position: relative;
-        }
+        .cert-card { width: 900px; height: 600px; background: #080b12; border: 2px solid var(--neon-cyan); padding: 40px; position: relative; }
         .cert-inner { border: 1px solid rgba(0, 242, 255, 0.1); height: 100%; display: flex; flex-direction: column; justify-content: center; text-align: center; }
         .cert-user { font-size: 60px; color: var(--neon-cyan); text-transform: uppercase; margin: 35px 0; font-weight: 800; }
 
-        /* --- Footer --- */
         footer { background: #020617; padding: 80px 60px; border-top: 1px solid var(--border-glass); }
         .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.5fr; gap: 60px; }
         .f-col h4 { color: var(--neon-cyan); font-size: 13px; text-transform: uppercase; margin-bottom: 30px; }
@@ -228,11 +200,7 @@
         .f-col ul li a { color: #64748b; text-decoration: none; font-size: 14px; transition: 0.3s; }
         .f-col ul li a:hover { color: var(--neon-cyan); padding-left: 5px; }
         .social-icons { display: flex; gap: 15px; margin-top: 30px; }
-        .social-icons a { 
-            width: 45px; height: 45px; border-radius: 12px; background: rgba(255,255,255,0.03); 
-            border: 1px solid var(--border-glass); display: flex; align-items: center; justify-content: center; 
-            color: #94a3b8; text-decoration: none; transition: 0.3s; 
-        }
+        .social-icons a { width: 45px; height: 45px; border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); display: flex; align-items: center; justify-content: center; color: #94a3b8; text-decoration: none; transition: 0.3s; }
         .social-icons a:hover { border-color: var(--neon-cyan); color: white; transform: translateY(-3px); }
         .footer-bottom { border-top: 1px solid #1e293b; padding-top: 40px; margin-top: 60px; display: flex; justify-content: space-between; font-size: 12px; color: #475569; }
         .kinan-tag { color: var(--neon-cyan); text-decoration: none; font-weight: 600; }
@@ -293,38 +261,29 @@
         <button class="btn-claim" id="openModal">Claim Your Spot Now</button>
     </div>
 
-    <!-- ====== MODAL ====== -->
     <div class="modal-overlay" id="overlay">
         <div class="modal-content">
 
-            <!-- STEP 1: \u062a\u0633\u062c\u064a\u0644 \u0627\u0644\u062f\u062e\u0648\u0644 -->
             <div id="step1">
                 <h2>Account Access</h2>
                 <p>Sign in to claim your spot on the global grid</p>
-
                 <button class="btn-google" id="btnGoogle">
                     <i class="fa-brands fa-google" style="color: #4285F4;"></i> Continue with Google
                 </button>
-
                 <div class="divider">OR</div>
-
                 <input type="email" id="emailInput" placeholder="Email Address">
                 <input type="password" id="passwordInput" placeholder="Password">
                 <div class="error-msg" id="authError"></div>
                 <div class="success-msg" id="authSuccess"></div>
-
                 <button class="btn-submit" id="btnEmailLogin">Login with Email</button>
                 <button class="btn-submit" style="background: transparent; color: var(--neon-cyan); border: 2px solid var(--neon-cyan); margin-top: 10px;" id="btnEmailRegister">Create Account</button>
             </div>
 
-            <!-- STEP 2: \u062a\u0639\u0628\u0626\u0629 \u0627\u0644\u0628\u064a\u0627\u0646\u0627\u062a -->
             <div id="step2" style="display:none;">
                 <h2>Claim Your Spot</h2>
                 <p>Fill in your details to complete ownership</p>
-
                 <input type="text" id="userName" placeholder="Your Full Name">
                 <input type="text" id="userLink" placeholder="Website or Social Link">
-
                 <label class="upload-label" for="fileInput">
                     <i class="fa-solid fa-cloud-arrow-up"></i>
                     Upload Your Image
@@ -332,14 +291,13 @@
                 <input type="file" id="fileInput" accept="image/*">
                 <div id="fileName"></div>
 
-                <!-- Pixel Size Selector -->
                 <div class="pixel-size-box">
-                    <label>Select Your Space Size (min 10\u00d710)</label>
+                    <label>Select Your Space Size (min 10×10)</label>
                     <div class="size-inputs">
                         <input type="number" id="pixelW" placeholder="W" min="10" value="10">
-                        <span>\u00d7</span>
+                        <span>×</span>
                         <input type="number" id="pixelH" placeholder="H" min="10" value="10">
-                        <span style="font-size:13px; color: var(--text-muted);">pixels</span>
+                        <span style="font-size:13px; color: var(--text-muted);">px</span>
                     </div>
                     <div class="pixel-summary">
                         <div class="ps-item">
@@ -352,12 +310,11 @@
                         </div>
                         <div class="ps-item">
                             <span class="ps-label">Size</span>
-                            <span class="ps-val" id="sizeLabel">10\u00d710</span>
+                            <span class="ps-val" id="sizeLabel">10×10</span>
                         </div>
                     </div>
                 </div>
 
-                <!-- Payment -->
                 <div class="payment-section">
                     <p>Choose Payment Method</p>
                     <div class="payment-btns">
@@ -376,7 +333,6 @@
         </div>
     </div>
 
-    <!-- ====== CERTIFICATE ====== -->
     <div id="certView">
         <div class="cert-card">
             <div class="cert-inner">
@@ -430,5 +386,194 @@
     </footer>
 
     <script>
-        // ====== EMAILJS INIT ======
-        emailjs.init('ew1xo1RoaHDx
+        emailjs.init('ew1xo1RoaHDx1re7b');
+
+        const { createClient } = supabase;
+        const sb = createClient(
+            'https://srrsldjzjdpbewgjloli.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InNycnNsZGp6amRwYmV3Z2psb2xpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzM2NTE0NDAsImV4cCI6MjA4OTIyNzQ0MH0._A1CxeH923sE782EntqHIcwqXSInH7cQdtmxrsEdjPQ'
+        );
+
+        const overlay     = document.getElementById('overlay');
+        const step1       = document.getElementById('step1');
+        const step2       = document.getElementById('step2');
+        const authError   = document.getElementById('authError');
+        const authSuccess = document.getElementById('authSuccess');
+        const claimError  = document.getElementById('claimError');
+        const userBarWrap = document.getElementById('userBarWrap');
+        const userBar     = document.getElementById('userBar');
+        const userEmail   = document.getElementById('userEmail');
+        const userAvatar  = document.getElementById('userAvatar');
+        const fileInput   = document.getElementById('fileInput');
+        const fileName    = document.getElementById('fileName');
+
+        async function loadCounters() {
+            const { data: vData } = await sb.from('visits').select('count').eq('id', 1).single();
+            if (vData) document.getElementById('visitorsCount').textContent = Number(vData.count).toLocaleString();
+            const { data: pData } = await sb.from('pixels').select('count').eq('id', 1).single();
+            if (pData) document.getElementById('pixelsCount').textContent = Number(pData.count).toLocaleString();
+        }
+
+        async function trackVisit() {
+            await sb.rpc('increment_visits');
+            loadCounters();
+        }
+
+        loadCounters();
+        trackVisit();
+
+        sb.auth.getSession().then(({ data: { session } }) => {
+            if (session) showUserBar(session.user);
+        });
+
+        sb.auth.onAuthStateChange((event, session) => {
+            if (session) {
+                showUserBar(session.user);
+                if (event === 'SIGNED_IN' && overlay.style.display === 'flex') {
+                    step1.style.display = 'none';
+                    step2.style.display = 'block';
+                }
+            } else { hideUserBar(); }
+        });
+
+        function showUserBar(user) {
+            userBarWrap.style.display = 'block';
+            userBar.style.display = 'flex';
+            userEmail.textContent = user.email || user.user_metadata?.full_name || 'User';
+            userAvatar.src = user.user_metadata?.avatar_url || '';
+            if (!userAvatar.src) userAvatar.style.display = 'none';
+            document.getElementById('loginBtn').textContent = 'MY ACCOUNT';
+        }
+
+        function hideUserBar() {
+            userBarWrap.style.display = 'none';
+            document.getElementById('loginBtn').textContent = 'LOGIN';
+        }
+
+        document.getElementById('openModal').onclick = async () => {
+            const { data: { session } } = await sb.auth.getSession();
+            if (session) { step1.style.display = 'none'; step2.style.display = 'block'; }
+            else { step1.style.display = 'block'; step2.style.display = 'none'; }
+            overlay.style.display = 'flex';
+        };
+
+        document.getElementById('loginBtn').onclick = (e) => { e.preventDefault(); overlay.style.display = 'flex'; };
+        window.onclick = (e) => { if (e.target == overlay) overlay.style.display = 'none'; };
+
+        document.getElementById('btnGoogle').onclick = async () => {
+            const { error } = await sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.href } });
+            if (error) showError(authError, error.message);
+        };
+
+        document.getElementById('btnEmailLogin').onclick = async () => {
+            const email = document.getElementById('emailInput').value.trim();
+            const pass  = document.getElementById('passwordInput').value;
+            if (!email || !pass) return showError(authError, 'Please fill in all fields.');
+            setBtnLoading('btnEmailLogin', true);
+            const { error } = await sb.auth.signInWithPassword({ email, password: pass });
+            setBtnLoading('btnEmailLogin', false);
+            if (error) showError(authError, error.message);
+            else { step1.style.display = 'none'; step2.style.display = 'block'; }
+        };
+
+        document.getElementById('btnEmailRegister').onclick = async () => {
+            const email = document.getElementById('emailInput').value.trim();
+            const pass  = document.getElementById('passwordInput').value;
+            if (!email || !pass) return showError(authError, 'Please fill in all fields.');
+            if (pass.length < 6) return showError(authError, 'Password must be at least 6 characters.');
+            setBtnLoading('btnEmailRegister', true);
+            const { error } = await sb.auth.signUp({ email, password: pass });
+            setBtnLoading('btnEmailRegister', false);
+            if (error) showError(authError, error.message);
+            else showSuccess(authSuccess, 'Account created! Check your email to confirm, then login.');
+        };
+
+        function updatePixelCalc() {
+            let w = parseInt(document.getElementById('pixelW').value) || 10;
+            let h = parseInt(document.getElementById('pixelH').value) || 10;
+            if (w < 10) { w = 10; document.getElementById('pixelW').value = 10; }
+            if (h < 10) { h = 10; document.getElementById('pixelH').value = 10; }
+            const total = w * h;
+            document.getElementById('totalPixels').textContent = total.toLocaleString();
+            document.getElementById('totalPrice').textContent = '$' + total.toLocaleString();
+            document.getElementById('sizeLabel').textContent = w + '×' + h;
+        }
+
+        document.getElementById('pixelW').addEventListener('input', updatePixelCalc);
+        document.getElementById('pixelH').addEventListener('input', updatePixelCalc);
+
+        fileInput.onchange = () => { if (fileInput.files[0]) fileName.textContent = '✓ ' + fileInput.files[0].name; };
+
+        document.getElementById('btnPaypal').onclick = () => processClaim('PayPal');
+        document.getElementById('btnStripe').onclick = () => processClaim('Stripe');
+
+        async function processClaim(paymentMethod) {
+            const name = document.getElementById('userName').value.trim();
+            const link = document.getElementById('userLink').value.trim();
+            const file = fileInput.files[0];
+            let w = parseInt(document.getElementById('pixelW').value) || 10;
+            let h = parseInt(document.getElementById('pixelH').value) || 10;
+            if (w < 10) w = 10;
+            if (h < 10) h = 10;
+            const totalPixels = w * h;
+            const totalPrice  = totalPixels;
+
+            if (!name) return showError(claimError, 'Please enter your name.');
+            if (!file) return showError(claimError, 'Please upload an image.');
+
+            document.getElementById('btnPaypal').disabled = true;
+            document.getElementById('btnStripe').disabled = true;
+
+            const fileExt  = file.name.split('.').pop();
+            const filePath = `${Date.now()}-${Math.random().toString(36).slice(2)}.${fileExt}`;
+            const { error: uploadError } = await sb.storage.from('pixel-images').upload(filePath, file);
+
+            if (uploadError) {
+                document.getElementById('btnPaypal').disabled = false;
+                document.getElementById('btnStripe').disabled = false;
+                return showError(claimError, 'Image upload failed: ' + uploadError.message);
+            }
+
+            const { data: urlData } = sb.storage.from('pixel-images').getPublicUrl(filePath);
+            const imageUrl = urlData.publicUrl;
+
+            const { error: dbError } = await sb.from('blocks').insert([{
+                user_name: name, pixel_link: link, image_url: imageUrl,
+                width: w, height: h, total_pixels: totalPixels,
+                total_price: totalPrice, payment: paymentMethod
+            }]);
+
+            if (dbError) {
+                document.getElementById('btnPaypal').disabled = false;
+                document.getElementById('btnStripe').disabled = false;
+                return showError(claimError, 'Save failed: ' + dbError.message);
+            }
+
+            await sb.rpc('decrement_pixels', { amount: totalPixels });
+            loadCounters();
+
+            const { data: { user } } = await sb.auth.getUser();
+            await emailjs.send('service_26ecvjv', 'template_t250i1z', {
+                user_name: name, user_email: user ? user.email : 'Unknown',
+                user_link: link, width: w, height: h,
+                total_pixels: totalPixels, total_price: '$' + totalPrice,
+                image_url: imageUrl
+            });
+
+            document.getElementById('targetName').innerText = name.toUpperCase();
+            overlay.style.display = 'none';
+            document.getElementById('certView').style.display = 'flex';
+        }
+
+        document.getElementById('logoutBtn').onclick = async () => { await sb.auth.signOut(); };
+
+        function showError(el, msg) { el.textContent = msg; el.style.display = 'block'; setTimeout(() => el.style.display = 'none', 5000); }
+        function showSuccess(el, msg) { el.textContent = msg; el.style.display = 'block'; }
+        function setBtnLoading(id, loading) {
+            const btn = document.getElementById(id);
+            btn.disabled = loading;
+            btn.textContent = loading ? 'Please wait...' : btn.dataset.label || btn.textContent;
+        }
+    </script>
+</body>
+</html>
