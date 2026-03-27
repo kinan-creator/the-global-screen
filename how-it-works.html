@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280">
+    <title>How It Works | The Global Screen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root { --bg-deep: #050a0f; --neon-cyan: #00f2ff; --border-glass: rgba(255,255,255,0.08); --text-muted: #8492a6; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg-deep); color: white; font-family: 'Montserrat', sans-serif; width: 1280px; margin: 0 auto; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 25px 60px; border-bottom: 1px solid var(--border-glass); background: rgba(5,10,15,0.5); backdrop-filter: blur(10px); }
+        .logo { font-size: 24px; font-weight: 700; text-decoration: none; color: white; }
+        .logo span { color: var(--neon-cyan); }
+        .back-btn { color: var(--text-muted); text-decoration: none; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
+        .back-btn:hover { color: var(--neon-cyan); }
+
+        .page-hero { padding: 100px 60px 60px; text-align: center; background: radial-gradient(circle at 50% 0%, rgba(0,242,255,0.08), transparent 60%); }
+        .page-hero h1 { font-size: 48px; font-weight: 800; margin-bottom: 20px; }
+        .page-hero h1 span { color: var(--neon-cyan); }
+        .page-hero p { color: var(--text-muted); font-size: 16px; max-width: 700px; margin: 0 auto; line-height: 1.8; }
+
+        .steps { padding: 60px; max-width: 900px; margin: 0 auto; }
+        .step { display: flex; gap: 40px; align-items: flex-start; margin-bottom: 60px; padding-bottom: 60px; border-bottom: 1px solid var(--border-glass); }
+        .step:last-of-type { border-bottom: none; }
+        .step-num { flex-shrink: 0; width: 60px; height: 60px; border-radius: 50%; border: 2px solid var(--neon-cyan); display: flex; align-items: center; justify-content: center; font-size: 20px; font-weight: 800; color: var(--neon-cyan); box-shadow: 0 0 20px rgba(0,242,255,0.2); }
+        .step-content h2 { font-size: 20px; font-weight: 800; margin-bottom: 12px; }
+        .step-content p { color: #94a3b8; font-size: 14px; line-height: 1.9; margin-bottom: 10px; }
+        .step-content ul { list-style: none; padding: 0; margin-top: 10px; }
+        .step-content ul li { color: #94a3b8; font-size: 14px; padding: 6px 0; padding-left: 20px; position: relative; }
+        .step-content ul li::before { content: '›'; position: absolute; left: 0; color: var(--neon-cyan); font-weight: 700; }
+
+        .phases-section { padding: 0 60px 80px; }
+        .phases-section h2 { font-size: 22px; font-weight: 800; color: var(--neon-cyan); margin-bottom: 30px; text-transform: uppercase; letter-spacing: 1px; }
+        .phases-table { width: 100%; border-collapse: collapse; }
+        .phases-table th { background: rgba(0,242,255,0.08); color: var(--neon-cyan); font-size: 11px; text-transform: uppercase; letter-spacing: 1px; padding: 14px 20px; text-align: left; border-bottom: 1px solid rgba(0,242,255,0.2); }
+        .phases-table td { padding: 16px 20px; font-size: 13px; border-bottom: 1px solid var(--border-glass); color: #94a3b8; }
+        .phases-table tr:hover td { background: rgba(0,242,255,0.03); color: white; }
+        .phase-active { color: #4ade80 !important; font-weight: 700; }
+        .phase-badge { display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 10px; font-weight: 700; letter-spacing: 1px; }
+        .badge-active { background: rgba(74,222,128,0.1); color: #4ade80; border: 1px solid rgba(74,222,128,0.3); }
+        .badge-upcoming { background: rgba(148,163,184,0.1); color: #64748b; border: 1px solid #1e293b; }
+
+        .note-box { background: rgba(0,242,255,0.04); border: 1px solid rgba(0,242,255,0.15); border-radius: 16px; padding: 24px 30px; margin: 30px 60px 60px; font-size: 13px; color: #94a3b8; line-height: 1.8; }
+        .note-box strong { color: var(--neon-cyan); }
+
+        .cta-section { text-align: center; padding: 60px; background: radial-gradient(circle at 50% 50%, rgba(0,242,255,0.06), transparent 60%); }
+        .cta-btn { display: inline-block; margin-top: 20px; padding: 20px 60px; border: 2px solid var(--neon-cyan); color: white; text-decoration: none; border-radius: 14px; font-weight: 800; font-size: 15px; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; }
+        .cta-btn:hover { background: var(--neon-cyan); color: #000; }
+        footer-mini { display: block; text-align: center; padding: 30px; color: #334155; font-size: 12px; border-top: 1px solid var(--border-glass); }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo"><span>The</span> Global Screen</a>
+        <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Grid</a>
+    </header>
+
+    <div class="page-hero">
+        <h1>Your Journey to the <span>Global Grid</span></h1>
+        <p>Building your presence and securing your place in internet history happens through simple, carefully designed steps.</p>
+    </div>
+
+    <div class="steps">
+        <div class="step">
+            <div class="step-num">1</div>
+            <div class="step-content">
+                <h2>Secure Your Access</h2>
+                <p>Start by clicking "Claim Your Spot Now". The first step is a quick login via Google or email. This account is your official gateway to managing your space and tracking clicks and growth going forward.</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-num">2</div>
+            <div class="step-content">
+                <h2>Brand Your Presence</h2>
+                <p>After signing in, fill in your brand or creator identity details:</p>
+                <ul>
+                    <li>Your name, company name, or channel name</li>
+                    <li>Upload the image or logo that will represent you on the global network</li>
+                    <li>Add the link you want to direct visitors to — your website, store, or social media</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-num">3</div>
+            <div class="step-content">
+                <h2>Define Your Territory</h2>
+                <p>Here you define the size of your digital footprint. Set the dimensions of your space (e.g., 18×35 pixels). The price is calculated instantly based on your chosen size at $1.00 per pixel in the current phase.</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-num">4</div>
+            <div class="step-content">
+                <h2>Confirm & Pay</h2>
+                <p>Once you've defined your space, the system calculates the total cost instantly. Complete payment securely via Stripe or PayPal. An official confirmation email will be sent to you immediately upon completion.</p>
+            </div>
+        </div>
+
+        <div class="step">
+            <div class="step-num">5</div>
+            <div class="step-content">
+                <h2>Go Live & Dominate</h2>
+                <p>Our team manually processes your request to ensure quality. Your space will appear on the global network within 5–10 minutes.</p>
+                <ul>
+                    <li>Receive a premium digital ownership certificate to share with your audience</li>
+                    <li>Automatically enter the "Top 25 Most Clicked" competition for additional free exposure</li>
+                    <li>Every visitor who clicks your space is redirected to your link</li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="phases-section">
+        <h2>The Strategic Growth — 4 Phases</h2>
+        <p style="color:var(--text-muted);font-size:13px;margin-bottom:25px;">We reward early supporters with a tiered pricing system built on scarcity.</p>
+        <table class="phases-table">
+            <thead>
+                <tr>
+                    <th>Phase</th>
+                    <th>Status</th>
+                    <th>Total Pixels</th>
+                    <th>Edges</th>
+                    <th>Near Center</th>
+                    <th>The Core</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong style="color:white;">Phase 1</strong><br><span style="font-size:11px;">Founders Access</span></td>
+                    <td><span class="phase-badge badge-active">ACTIVE</span></td>
+                    <td>200,000 px</td>
+                    <td class="phase-active">$0.50</td>
+                    <td class="phase-active">$1.00</td>
+                    <td class="phase-active">$2.00</td>
+                </tr>
+                <tr>
+                    <td><strong style="color:white;">Phase 2</strong><br><span style="font-size:11px;">Explosion</span></td>
+                    <td><span class="phase-badge badge-upcoming">UPCOMING</span></td>
+                    <td>300,000 px</td>
+                    <td>$3.00</td>
+                    <td>$5.00</td>
+                    <td>$8.00</td>
+                </tr>
+                <tr>
+                    <td><strong style="color:white;">Phase 3</strong><br><span style="font-size:11px;">Domination</span></td>
+                    <td><span class="phase-badge badge-upcoming">UPCOMING</span></td>
+                    <td>300,000 px</td>
+                    <td>$10.00</td>
+                    <td>$15.00</td>
+                    <td>$25.00</td>
+                </tr>
+                <tr>
+                    <td><strong style="color:white;">Phase 4</strong><br><span style="font-size:11px;">Final Legacy</span></td>
+                    <td><span class="phase-badge badge-upcoming">UPCOMING</span></td>
+                    <td>200,000 px</td>
+                    <td>$30.00</td>
+                    <td>$50.00</td>
+                    <td>$100.00</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div class="note-box">
+        <strong>Important Note:</strong> After Phase 4 is complete, direct sales will close permanently. The only way to enter the network will be through the Resale Marketplace from current owners — making early entry a genuine investment opportunity.
+    </div>
+
+    <div class="cta-section">
+        <h2>Start Now — Phase 1 Prices Won't Last</h2>
+        <p style="color:var(--text-muted);font-size:14px;margin-top:10px;">Secure your spot at the lowest price before the next phase begins.</p>
+        <a href="index.html" class="cta-btn">Claim Your Spot Now</a>
+    </div>
+
+    <footer-mini>&copy; 2026 The Global Screen. Managed by Kinan Alslman.</footer-mini>
+</body>
+</html>
