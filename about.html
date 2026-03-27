@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280">
+    <title>About Us | The Global Screen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root { --bg-deep: #050a0f; --neon-cyan: #00f2ff; --border-glass: rgba(255,255,255,0.08); --text-muted: #8492a6; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg-deep); color: white; font-family: 'Montserrat', sans-serif; width: 1280px; margin: 0 auto; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 25px 60px; border-bottom: 1px solid var(--border-glass); background: rgba(5,10,15,0.5); backdrop-filter: blur(10px); }
+        .logo { font-size: 24px; font-weight: 700; text-decoration: none; color: white; }
+        .logo span { color: var(--neon-cyan); }
+        .back-btn { color: var(--text-muted); text-decoration: none; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
+        .back-btn:hover { color: var(--neon-cyan); }
+
+        .page-hero { padding: 100px 60px 60px; text-align: center; background: radial-gradient(circle at 50% 0%, rgba(0,242,255,0.08), transparent 60%); }
+        .page-hero h1 { font-size: 48px; font-weight: 800; margin-bottom: 20px; }
+        .page-hero h1 span { color: var(--neon-cyan); }
+        .page-hero p { color: var(--text-muted); font-size: 16px; max-width: 700px; margin: 0 auto; line-height: 1.8; }
+
+        .content { padding: 60px; max-width: 900px; margin: 0 auto; }
+        .section { margin-bottom: 70px; }
+        .section h2 { font-size: 22px; font-weight: 800; color: var(--neon-cyan); margin-bottom: 20px; text-transform: uppercase; letter-spacing: 1px; }
+        .section p { color: #94a3b8; font-size: 15px; line-height: 1.9; margin-bottom: 15px; }
+
+        .highlight-box { background: rgba(0,242,255,0.04); border: 1px solid rgba(0,242,255,0.15); border-radius: 20px; padding: 40px; margin: 40px 0; }
+        .highlight-box h3 { color: white; font-size: 18px; font-weight: 700; margin-bottom: 15px; }
+        .highlight-box p { color: #94a3b8; font-size: 14px; line-height: 1.8; }
+
+        .pillars { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; }
+        .pillar { background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: 16px; padding: 30px; text-align: center; transition: 0.3s; }
+        .pillar:hover { border-color: rgba(0,242,255,0.3); background: rgba(0,242,255,0.04); }
+        .pillar i { font-size: 32px; color: var(--neon-cyan); margin-bottom: 15px; display: block; }
+        .pillar h4 { font-size: 14px; font-weight: 700; margin-bottom: 10px; }
+        .pillar p { font-size: 12px; color: var(--text-muted); line-height: 1.6; }
+
+        .cta-section { text-align: center; padding: 80px 60px; background: radial-gradient(circle at 50% 50%, rgba(0,242,255,0.06), transparent 60%); }
+        .cta-section h2 { font-size: 32px; font-weight: 800; margin-bottom: 15px; }
+        .cta-btn { display: inline-block; margin-top: 30px; padding: 20px 60px; border: 2px solid var(--neon-cyan); color: white; text-decoration: none; border-radius: 14px; font-weight: 800; font-size: 15px; text-transform: uppercase; letter-spacing: 2px; transition: 0.3s; }
+        .cta-btn:hover { background: var(--neon-cyan); color: #000; }
+
+        footer-mini { display: block; text-align: center; padding: 30px; color: #334155; font-size: 12px; border-top: 1px solid var(--border-glass); }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo"><span>The</span> Global Screen</a>
+        <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Grid</a>
+    </header>
+
+    <div class="page-hero">
+        <h1>The New Frontier of <span>Digital Ownership</span></h1>
+        <p>Where the internet meets permanence. Your space. Your legacy. Your asset.</p>
+    </div>
+
+    <div class="content">
+        <div class="section">
+            <h2>Who We Are</h2>
+            <p>The Global Screen is a global digital space designed to be the internet's own Times Square. We provide a platform that allows anyone — whether a business owner, content creator, or investor — to own a visible and permanent piece of the worldwide network.</p>
+            <p>Unlike traditional advertising that disappears in seconds, your space here is a <strong style="color:white;">Digital Asset</strong> — permanent, visible, and growing in value alongside the network.</p>
+        </div>
+
+        <div class="highlight-box">
+            <h3>Why Us?</h3>
+            <p>In a world where content vanishes instantly — Stories, Feeds, Algorithms — we offer digital permanence. Here, your space isn't just an advertisement; it's a digital asset that increases in value as the network grows. We merge the power of visual advertising with the concept of scarcity, dividing the map into limited phases, making early entry a real investment opportunity.</p>
+        </div>
+
+        <div class="section">
+            <h2>Our Vision</h2>
+            <p>To transform digital attention into real ownership. Once the map is complete, the platform will evolve from an advertising board into an open digital marketplace, where early owners can resell their spaces to others — making your place on the network a digital legacy that grows with you.</p>
+        </div>
+
+        <div class="pillars">
+            <div class="pillar">
+                <i class="fa-solid fa-globe"></i>
+                <h4>Global Reach</h4>
+                <p>Your brand, visible to every visitor from every corner of the world.</p>
+            </div>
+            <div class="pillar">
+                <i class="fa-solid fa-shield-halved"></i>
+                <h4>Permanent Ownership</h4>
+                <p>Your space is yours. No algorithm can remove it or hide it.</p>
+            </div>
+            <div class="pillar">
+                <i class="fa-solid fa-chart-line"></i>
+                <h4>Investment Value</h4>
+                <p>Early phases offer the lowest prices. Value grows with the network.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="cta-section">
+        <h2>Ready to Secure Your Legacy?</h2>
+        <p style="color:var(--text-muted); font-size:14px;">Join the first wave of digital landowners on The Global Screen.</p>
+        <a href="index.html" class="cta-btn">Claim Your Spot Now</a>
+    </div>
+
+    <footer-mini>&copy; 2026 The Global Screen. Managed by Kinan Alslman.</footer-mini>
+</body>
+</html>
