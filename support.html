@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=1280">
+    <title>Support | The Global Screen</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root { --bg-deep: #050a0f; --neon-cyan: #00f2ff; --border-glass: rgba(255,255,255,0.08); --text-muted: #8492a6; }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { background: var(--bg-deep); color: white; font-family: 'Montserrat', sans-serif; width: 1280px; margin: 0 auto; }
+        header { display: flex; justify-content: space-between; align-items: center; padding: 25px 60px; border-bottom: 1px solid var(--border-glass); background: rgba(5,10,15,0.5); backdrop-filter: blur(10px); }
+        .logo { font-size: 24px; font-weight: 700; text-decoration: none; color: white; }
+        .logo span { color: var(--neon-cyan); }
+        .back-btn { color: var(--text-muted); text-decoration: none; font-size: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: 1px; display: flex; align-items: center; gap: 8px; transition: 0.3s; }
+        .back-btn:hover { color: var(--neon-cyan); }
+
+        .page-hero { padding: 100px 60px 60px; text-align: center; background: radial-gradient(circle at 50% 0%, rgba(0,242,255,0.08), transparent 60%); }
+        .page-hero h1 { font-size: 48px; font-weight: 800; margin-bottom: 20px; }
+        .page-hero h1 span { color: var(--neon-cyan); }
+        .page-hero p { color: var(--text-muted); font-size: 16px; max-width: 600px; margin: 0 auto; line-height: 1.8; }
+
+        .contact-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; padding: 60px; max-width: 900px; margin: 0 auto; }
+        .contact-card { background: rgba(255,255,255,0.02); border: 1px solid var(--border-glass); border-radius: 24px; padding: 40px; transition: 0.3s; }
+        .contact-card:hover { border-color: rgba(0,242,255,0.3); background: rgba(0,242,255,0.03); }
+        .contact-card i { font-size: 36px; color: var(--neon-cyan); margin-bottom: 20px; display: block; }
+        .contact-card h3 { font-size: 18px; font-weight: 800; margin-bottom: 10px; }
+        .contact-card p { color: var(--text-muted); font-size: 13px; line-height: 1.7; margin-bottom: 20px; }
+        .contact-card a { display: inline-flex; align-items: center; gap: 8px; background: rgba(0,242,255,0.08); border: 1px solid rgba(0,242,255,0.3); color: var(--neon-cyan); padding: 12px 22px; border-radius: 10px; font-size: 13px; font-weight: 700; text-decoration: none; transition: 0.3s; }
+        .contact-card a:hover { background: var(--neon-cyan); color: #000; }
+
+        .tip-box { background: rgba(0,242,255,0.04); border: 1px solid rgba(0,242,255,0.15); border-radius: 16px; padding: 24px 30px; margin: 0 60px 60px; max-width: 860px; }
+        .tip-box p { color: #94a3b8; font-size: 13px; line-height: 1.8; }
+        .tip-box strong { color: var(--neon-cyan); }
+
+        footer-mini { display: block; text-align: center; padding: 30px; color: #334155; font-size: 12px; border-top: 1px solid var(--border-glass); }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="logo"><span>The</span> Global Screen</a>
+        <a href="index.html" class="back-btn"><i class="fa-solid fa-arrow-left"></i> Back to Grid</a>
+    </header>
+
+    <div class="page-hero">
+        <h1>We're Here to <span>Help You</span></h1>
+        <p>Your experience is our top priority. Whether you have a question, need technical help, or want to explore business partnerships — our team is ready.</p>
+    </div>
+
+    <div class="contact-grid">
+        <div class="contact-card">
+            <i class="fa-solid fa-envelope"></i>
+            <h3>Email Support</h3>
+            <p>For detailed inquiries, order tracking, or business partnerships. We respond within 24–48 hours.</p>
+            <a href="mailto:contact.alexreiner@gmail.com"><i class="fa-solid fa-paper-plane"></i> Send Email</a>
+        </div>
+        <div class="contact-card">
+            <i class="fa-brands fa-whatsapp"></i>
+            <h3>WhatsApp — Direct Support</h3>
+            <p>For quick questions, order follow-ups, or urgent issues. Available for fast response during business hours.</p>
+            <a href="https://wa.me/963938148255" target="_blank"><i class="fa-brands fa-whatsapp"></i> Open WhatsApp</a>
+        </div>
+    </div>
+
+    <div class="tip-box">
+        <p><strong>Pro Tip:</strong> Please include your <strong>Order ID</strong> (found in your confirmation email or ownership certificate) in your message to ensure faster processing. Your certificate ID follows the format: <strong>#2026-TGS-XXXXX</strong></p>
+    </div>
+
+    <footer-mini>&copy; 2026 The Global Screen. Managed by Kinan Alslman.</footer-mini>
+</body>
+</html>
