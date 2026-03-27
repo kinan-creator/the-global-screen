@@ -26,6 +26,11 @@
             to { opacity: 1; transform: scale(1) translateY(0); }
         }
 
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-8px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
         body {
             margin: 0 auto; padding: 0;
             background-color: var(--bg-deep);
@@ -34,10 +39,12 @@
             width: 1280px; overflow-x: hidden;
         }
 
+        /* --- Header --- */
         header {
             display: flex; justify-content: space-between; align-items: center;
             padding: 25px 60px; border-bottom: 1px solid var(--border-glass);
             background: rgba(5,10,15,0.5); backdrop-filter: blur(10px);
+            position: relative;
         }
         .logo { font-size: 24px; font-weight: 700; }
         .logo span { color: var(--neon-cyan); text-shadow: 0 0 10px rgba(0,242,255,0.5); }
@@ -47,6 +54,30 @@
         .login-box { border: 1px solid rgba(255,255,255,0.2); padding: 8px 22px; border-radius: 8px; background: rgba(255,255,255,0.03); transition: 0.3s; cursor: pointer; }
         .login-box:hover { background: white; color: black !important; }
 
+        /* --- Follow Us Dropdown --- */
+        .follow-wrapper { position: relative; }
+        .follow-dropdown {
+            position: absolute; top: calc(100% + 15px); left: 50%; transform: translateX(-50%);
+            background: #0d1117; border: 1px solid var(--neon-cyan);
+            border-radius: 16px; padding: 20px 24px;
+            display: none; z-index: 999;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(0,242,255,0.1);
+            animation: fadeIn 0.2s ease;
+            white-space: nowrap;
+        }
+        .follow-dropdown.open { display: block; }
+        .follow-dropdown-title { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px; }
+        .follow-icons { display: flex; gap: 12px; }
+        .follow-icon {
+            width: 44px; height: 44px; border-radius: 12px;
+            background: rgba(255,255,255,0.04); border: 1px solid #1e293b;
+            display: flex; align-items: center; justify-content: center;
+            color: #94a3b8; text-decoration: none; font-size: 18px;
+            transition: 0.25s;
+        }
+        .follow-icon:hover { border-color: var(--neon-cyan); color: var(--neon-cyan); transform: translateY(-3px); background: rgba(0,242,255,0.06); }
+
+        /* --- Stats Row --- */
         .stats-row { display: flex; justify-content: space-between; align-items: center; padding: 50px 60px; }
         .search-box { width: 400px; position: relative; }
         .search-box input {
@@ -56,6 +87,16 @@
         }
         .search-box input::placeholder { color: var(--text-muted); }
         .search-box i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--neon-cyan); }
+        .search-results {
+            position: absolute; top: 60px; left: 0; width: 100%;
+            background: #0d1117; border: 1px solid var(--neon-cyan);
+            border-radius: 12px; z-index: 1000; display: none; overflow: hidden;
+        }
+        .search-result-item { padding: 12px 18px; cursor: pointer; transition: 0.2s; border-bottom: 1px solid #1e293b; font-size: 13px; }
+        .search-result-item:hover { background: rgba(0,242,255,0.05); }
+        .search-result-item:last-child { border-bottom: none; }
+        .sri-name { font-weight: 700; color: white; }
+        .sri-id { font-size: 10px; color: var(--neon-cyan); margin-top: 2px; }
 
         .metrics { display: flex; gap: 60px; }
         .metric-item { text-align: left; }
@@ -65,7 +106,7 @@
 
         /* --- Grid --- */
         .grid-wrapper {
-            margin: 0 60px;
+            margin: 0 20px;
             border: 1px solid var(--border-glass);
             border-radius: 24px;
             overflow: hidden;
@@ -75,37 +116,31 @@
             cursor: crosshair;
         }
         .grid-wrapper img {
-    width: 100%;
-    display: block;
+            width: 100%;
+            display: block;
+            transform: scale(1.12);
+            transform-origin: center center;
         }
-
-            
-
-        /* --- Block Overlays --- */
         .block-overlay {
-            position: absolute;
-            cursor: pointer;
-            border: 2px solid transparent;
-            transition: border-color 0.2s, background 0.2s;
+            position: absolute; cursor: pointer;
+            border: 2px solid transparent; transition: border-color 0.2s, background 0.2s;
             border-radius: 4px;
         }
-        .block-overlay:hover {
-            border-color: var(--neon-cyan);
-            background: rgba(0,242,255,0.08);
-        }
+        .block-overlay:hover { border-color: var(--neon-cyan); background: rgba(0,242,255,0.08); }
 
-        /* --- Popup --- */
+        @keyframes highlightPulse {
+            0%, 100% { box-shadow: 0 0 0 3px var(--neon-cyan); }
+            50% { box-shadow: 0 0 0 8px rgba(0,242,255,0.3); }
+        }
+        .block-overlay.highlighted { border-color: var(--neon-cyan) !important; background: rgba(0,242,255,0.15) !important; animation: highlightPulse 1s ease infinite; }
+
+        /* --- Block Popup --- */
         .block-popup {
-            position: fixed;
-            z-index: 5000;
-            background: #0d1117;
-            border: 1.5px solid var(--neon-cyan);
-            border-radius: 20px;
-            padding: 28px 30px;
-            width: 300px;
+            position: fixed; z-index: 5000;
+            background: #0d1117; border: 1.5px solid var(--neon-cyan);
+            border-radius: 20px; padding: 28px 30px; width: 300px;
             box-shadow: 0 0 40px rgba(0,242,255,0.2), 0 20px 60px rgba(0,0,0,0.8);
-            animation: popupIn 0.25s ease;
-            display: none;
+            animation: popupIn 0.25s ease; display: none;
         }
         .popup-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; }
         .popup-name { font-size: 17px; font-weight: 800; color: white; }
@@ -113,41 +148,14 @@
         .popup-close:hover { color: white; }
         .popup-id { font-size: 10px; color: var(--neon-cyan); letter-spacing: 2px; margin-bottom: 16px; }
         .popup-img { width: 100%; height: 120px; object-fit: cover; border-radius: 10px; margin-bottom: 16px; border: 1px solid #1e293b; }
-        .popup-link {
-            display: flex; align-items: center; gap: 8px;
-            color: var(--neon-cyan); font-size: 12px; text-decoration: none;
-            background: rgba(0,242,255,0.05); border: 1px solid rgba(0,242,255,0.2);
-            padding: 10px 14px; border-radius: 10px; margin-bottom: 14px;
-            transition: 0.3s; word-break: break-all;
-        }
+        .popup-link { display: flex; align-items: center; gap: 8px; color: var(--neon-cyan); font-size: 12px; text-decoration: none; background: rgba(0,242,255,0.05); border: 1px solid rgba(0,242,255,0.2); padding: 10px 14px; border-radius: 10px; margin-bottom: 14px; transition: 0.3s; word-break: break-all; }
         .popup-link:hover { background: rgba(0,242,255,0.12); }
         .popup-stats { display: flex; justify-content: space-between; }
         .popup-stat { text-align: center; }
         .popup-stat-label { font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 4px; }
         .popup-stat-val { font-size: 16px; font-weight: 800; color: white; }
 
-        /* --- Search Results --- */
-        .search-results {
-            position: absolute; top: 60px; left: 0; width: 100%;
-            background: #0d1117; border: 1px solid var(--neon-cyan);
-            border-radius: 12px; z-index: 1000; display: none; overflow: hidden;
-        }
-        .search-result-item {
-            padding: 12px 18px; cursor: pointer; transition: 0.2s;
-            border-bottom: 1px solid #1e293b; font-size: 13px;
-        }
-        .search-result-item:hover { background: rgba(0,242,255,0.05); }
-        .search-result-item:last-child { border-bottom: none; }
-        .sri-name { font-weight: 700; color: white; }
-        .sri-id { font-size: 10px; color: var(--neon-cyan); margin-top: 2px; }
-
-        /* --- Highlight --- */
-        @keyframes highlightPulse {
-            0%, 100% { box-shadow: 0 0 0 3px var(--neon-cyan); }
-            50% { box-shadow: 0 0 0 8px rgba(0,242,255,0.3); }
-        }
-        .block-overlay.highlighted { border-color: var(--neon-cyan) !important; background: rgba(0,242,255,0.15) !important; animation: highlightPulse 1s ease infinite; }
-
+        /* --- Interaction Area --- */
         .interaction-area { display: flex; justify-content: center; align-items: center; padding: 60px 60px 100px; position: relative; }
         .trending-pill {
             position: absolute; left: 60px;
@@ -155,9 +163,11 @@
             padding: 12px 26px; border-radius: 50px;
             display: flex; align-items: center; gap: 12px;
             font-size: 11px; font-weight: 600; color: #a1aab7; letter-spacing: 1.2px;
-            backdrop-filter: blur(8px);
+            backdrop-filter: blur(8px); max-width: 400px; overflow: hidden;
         }
-        .trending-pill i { color: var(--neon-cyan); }
+        .trending-pill i { color: var(--neon-cyan); flex-shrink: 0; }
+        #trendingText { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
         .btn-claim {
             background: linear-gradient(135deg, #0f151e 0%, #05080b 100%); 
             color: #fff; border: 2.5px solid var(--neon-cyan);
@@ -167,6 +177,7 @@
         }
         .btn-claim:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,242,255,0.4); color: var(--neon-cyan); }
 
+        /* --- Modal --- */
         .modal-overlay {
             position: fixed; inset: 0; background: rgba(2,6,23,0.95);
             display: none; justify-content: center; align-items: center; z-index: 2000;
@@ -175,108 +186,87 @@
         .modal-content {
             background: #0f172a; border: 2px solid var(--neon-cyan);
             padding: 60px; border-radius: 35px; width: 480px; text-align: center;
-            box-shadow: 0 0 50px rgba(0,242,255,0.2);
-            max-height: 90vh; overflow-y: auto;
+            box-shadow: 0 0 50px rgba(0,242,255,0.2); max-height: 90vh; overflow-y: auto;
         }
         .modal-content h2 { color: white; margin-bottom: 10px; text-transform: uppercase; }
         .modal-content p { color: var(--text-muted); font-size: 13px; margin-bottom: 30px; }
-        .modal-content input {
-            width: 100%; padding: 18px; margin: 10px 0; background: rgba(0,0,0,0.5);
-            border: 1px solid #1e293b; color: white; border-radius: 14px; 
-            box-sizing: border-box; outline: none; font-family: inherit; font-size: 14px;
-        }
+        .modal-content input { width: 100%; padding: 18px; margin: 10px 0; background: rgba(0,0,0,0.5); border: 1px solid #1e293b; color: white; border-radius: 14px; box-sizing: border-box; outline: none; font-family: inherit; font-size: 14px; }
         .modal-content input:focus { border-color: var(--neon-cyan); }
-        .btn-google {
-            background: white; color: black; border: none; padding: 18px;
-            width: 100%; border-radius: 14px; font-weight: 700; cursor: pointer;
-            display: flex; align-items: center; justify-content: center; gap: 12px; 
-            margin-bottom: 20px; font-size: 15px; transition: 0.3s;
-        }
+        .btn-google { background: white; color: black; border: none; padding: 18px; width: 100%; border-radius: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 20px; font-size: 15px; transition: 0.3s; }
         .btn-google:hover { opacity: 0.9; transform: translateY(-2px); }
         .divider { display: flex; align-items: center; gap: 15px; margin: 15px 0; color: #334155; font-size: 12px; }
         .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #1e293b; }
-        .btn-submit {
-            background: var(--neon-cyan); color: #000; border: none;
-            width: 100%; padding: 18px; border-radius: 14px; font-weight: 800;
-            cursor: pointer; font-size: 15px; letter-spacing: 1px; transition: 0.3s;
-            text-transform: uppercase; margin-top: 10px;
-        }
+        .btn-submit { background: var(--neon-cyan); color: #000; border: none; width: 100%; padding: 18px; border-radius: 14px; font-weight: 800; cursor: pointer; font-size: 15px; letter-spacing: 1px; transition: 0.3s; text-transform: uppercase; margin-top: 10px; }
         .btn-submit:hover { opacity: 0.85; transform: translateY(-2px); }
         .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
         .error-msg { color: #f87171; font-size: 12px; margin-top: 10px; display: none; }
         .success-msg { color: #4ade80; font-size: 12px; margin-top: 10px; display: none; }
-
-        .upload-label {
-            display: block; padding: 20px; border: 2px dashed #1e293b;
-            border-radius: 14px; margin: 10px 0; cursor: pointer; color: var(--text-muted);
-            font-size: 13px; transition: 0.3s; text-align: center;
-        }
+        .upload-label { display: block; padding: 20px; border: 2px dashed #1e293b; border-radius: 14px; margin: 10px 0; cursor: pointer; color: var(--text-muted); font-size: 13px; transition: 0.3s; text-align: center; }
         .upload-label:hover { border-color: var(--neon-cyan); color: white; }
         .upload-label i { display: block; font-size: 24px; margin-bottom: 8px; color: var(--neon-cyan); }
         #fileInput { display: none; }
         #fileName { font-size: 11px; color: #4ade80; margin-top: 5px; }
-
-        .pixel-size-box {
-            background: rgba(0,0,0,0.3); border: 1px solid #1e293b;
-            border-radius: 14px; padding: 20px; margin: 15px 0; text-align: left;
-        }
+        .pixel-size-box { background: rgba(0,0,0,0.3); border: 1px solid #1e293b; border-radius: 14px; padding: 20px; margin: 15px 0; text-align: left; }
         .pixel-size-box > label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 12px; }
         .size-inputs { display: flex; gap: 10px; align-items: center; }
         .size-inputs input { width: 80px; padding: 12px; text-align: center; margin: 0; font-size: 16px; font-weight: 700; }
         .size-inputs span { color: var(--text-muted); font-size: 18px; }
-        .pixel-summary {
-            margin-top: 15px; padding: 15px; background: rgba(0,242,255,0.05);
-            border: 1px solid rgba(0,242,255,0.2); border-radius: 10px;
-            display: flex; justify-content: space-between; align-items: center;
-        }
+        .pixel-summary { margin-top: 15px; padding: 15px; background: rgba(0,242,255,0.05); border: 1px solid rgba(0,242,255,0.2); border-radius: 10px; display: flex; justify-content: space-between; align-items: center; }
         .ps-item { text-align: center; }
         .ps-label { font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 4px; }
         .ps-val { font-size: 16px; font-weight: 800; color: var(--neon-cyan); }
-
         .payment-section { margin-top: 15px; }
         .payment-section > p { font-size: 11px; color: var(--text-muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
         .payment-btns { display: flex; gap: 10px; }
-        .pay-btn {
-            flex: 1; padding: 14px; border-radius: 12px; cursor: pointer;
-            border: 1px solid #1e293b; background: #0a0e14; color: white;
-            font-size: 13px; font-weight: 700; transition: 0.3s;
-            display: flex; align-items: center; justify-content: center; gap: 8px;
-        }
+        .pay-btn { flex: 1; padding: 14px; border-radius: 12px; cursor: pointer; border: 1px solid #1e293b; background: #0a0e14; color: white; font-size: 13px; font-weight: 700; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
         .pay-btn.paypal:hover { border-color: #0070ba; color: #0070ba; }
         .pay-btn.stripe:hover { border-color: #635bff; color: #635bff; }
         .pay-btn i { font-size: 18px; }
         .pay-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        .user-bar {
-            display: none; align-items: center; gap: 12px;
-            background: rgba(0,242,255,0.05); border: 1px solid rgba(0,242,255,0.2);
-            padding: 8px 16px; border-radius: 10px; font-size: 12px; color: #cbd5e1;
-        }
+        /* --- User Bar --- */
+        .user-bar { display: none; align-items: center; gap: 12px; background: rgba(0,242,255,0.05); border: 1px solid rgba(0,242,255,0.2); padding: 8px 16px; border-radius: 10px; font-size: 12px; color: #cbd5e1; }
         .user-bar img { width: 30px; height: 30px; border-radius: 50%; }
         .btn-logout { margin-left: auto; background: none; border: 1px solid #334155; color: #94a3b8; padding: 4px 12px; border-radius: 6px; cursor: pointer; font-size: 11px; }
         .btn-logout:hover { border-color: #f87171; color: #f87171; }
 
-        #certView {
-            position: fixed; inset: 0; background: #020617; display: none;
-            flex-direction: column; justify-content: center; align-items: center; z-index: 3000;
-        }
+        /* --- Certificate --- */
+        #certView { position: fixed; inset: 0; background: #020617; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 3000; }
         .cert-card { width: 900px; height: 600px; background: #080b12; border: 2px solid var(--neon-cyan); padding: 40px; position: relative; }
         .cert-inner { border: 1px solid rgba(0,242,255,0.1); height: 100%; display: flex; flex-direction: column; justify-content: center; text-align: center; }
         .cert-user { font-size: 60px; color: var(--neon-cyan); text-transform: uppercase; margin: 35px 0; font-weight: 800; }
 
-        footer { background: #020617; padding: 80px 60px; border-top: 1px solid var(--border-glass); }
-        .footer-grid { display: grid; grid-template-columns: 1.5fr 1fr 1fr 1.5fr; gap: 60px; }
-        .f-col h4 { color: var(--neon-cyan); font-size: 13px; text-transform: uppercase; margin-bottom: 30px; }
-        .f-col ul { list-style: none; padding: 0; }
-        .f-col ul li { margin-bottom: 18px; }
-        .f-col ul li a { color: #64748b; text-decoration: none; font-size: 14px; transition: 0.3s; }
-        .f-col ul li a:hover { color: var(--neon-cyan); padding-left: 5px; }
-        .social-icons { display: flex; gap: 15px; margin-top: 30px; }
-        .social-icons a { width: 45px; height: 45px; border-radius: 12px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); display: flex; align-items: center; justify-content: center; color: #94a3b8; text-decoration: none; transition: 0.3s; }
-        .social-icons a:hover { border-color: var(--neon-cyan); color: white; transform: translateY(-3px); }
-        .footer-bottom { border-top: 1px solid #1e293b; padding-top: 40px; margin-top: 60px; display: flex; justify-content: space-between; font-size: 12px; color: #475569; }
+        /* --- Footer --- */
+        footer { background: #020617; padding: 80px 60px 0; border-top: 1px solid var(--border-glass); }
+        .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 60px; padding-bottom: 60px; }
+        .f-col h4 { color: var(--neon-cyan); font-size: 12px; text-transform: uppercase; margin-bottom: 25px; letter-spacing: 1.5px; }
+        .f-col p { color: #64748b; font-size: 13px; line-height: 1.8; margin-top: 15px; }
+        .f-col ul { list-style: none; padding: 0; margin: 0; }
+        .f-col ul li { margin-bottom: 14px; }
+        .f-col ul li a { color: #64748b; text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
+        .f-col ul li a:hover { color: var(--neon-cyan); padding-left: 4px; }
+        .f-col ul li .coming-soon { font-size: 9px; background: rgba(0,242,255,0.1); color: var(--neon-cyan); padding: 2px 8px; border-radius: 20px; letter-spacing: 1px; }
+        .footer-social { display: flex; gap: 10px; margin-top: 25px; flex-wrap: wrap; }
+        .footer-social a { width: 40px; height: 40px; border-radius: 10px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); display: flex; align-items: center; justify-content: center; color: #94a3b8; text-decoration: none; transition: 0.3s; font-size: 16px; }
+        .footer-social a:hover { border-color: var(--neon-cyan); color: var(--neon-cyan); transform: translateY(-3px); }
+        .discord-btn { margin-top: 18px; display: inline-flex; align-items: center; gap: 8px; background: rgba(88,101,242,0.1); border: 1px solid rgba(88,101,242,0.4); color: #7289da; padding: 10px 18px; border-radius: 10px; font-size: 12px; font-weight: 700; text-decoration: none; transition: 0.3s; }
+        .discord-btn:hover { background: rgba(88,101,242,0.2); border-color: #7289da; }
+        .trust-badges { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
+        .trust-badge { display: flex; align-items: center; gap: 10px; font-size: 12px; color: #64748b; }
+        .trust-badge i { color: var(--neon-cyan); width: 16px; }
+
+        /* Bottom Bar */
+        .footer-bottom {
+            border-top: 1px solid #1e293b; padding: 25px 0;
+            display: grid; grid-template-columns: 1fr 1fr 1fr;
+            align-items: center; font-size: 11px; color: #475569;
+        }
+        .footer-bottom .center { text-align: center; }
+        .footer-bottom .right { text-align: right; }
         .kinan-tag { color: var(--neon-cyan); text-decoration: none; font-weight: 600; }
-        .status-dot { height: 8px; width: 8px; background-color: #00ff88; border-radius: 50%; display: inline-block; margin-right: 7px; box-shadow: 0 0 10px #00ff88; }
+        .status-dot { height: 8px; width: 8px; background-color: #00ff88; border-radius: 50%; display: inline-block; margin-right: 6px; box-shadow: 0 0 8px #00ff88; }
+        .global-traffic { color: #94a3b8; }
+        .global-traffic span { color: var(--neon-cyan); font-weight: 700; }
     </style>
 </head>
 <body>
@@ -284,10 +274,23 @@
     <header>
         <div class="logo"><span>The</span> Global Screen</div>
         <div class="nav-links">
-            <a href="#">Latest News</a>
-            <a href="#">Follow Us</a>
-            <a href="#">About Us</a>
-            <a href="#">Contact Us</a>
+            <a href="about.html">About Us</a>
+            <a href="how-it-works.html">How It Works</a>
+            <a href="support.html">Contact Us</a>
+            <div class="follow-wrapper">
+                <a href="#" id="followBtn">Follow Us</a>
+                <div class="follow-dropdown" id="followDropdown">
+                    <div class="follow-dropdown-title">Follow us on</div>
+                    <div class="follow-icons">
+                        <a href="https://www.instagram.com/kinan_alslman?igsh=MTkwaTh6Y3A1bXk0ag==" target="_blank" class="follow-icon"><i class="fa-brands fa-instagram"></i></a>
+                        <a href="https://www.facebook.com/kinan.h.alsalman?mibextid=ZbWKwL" target="_blank" class="follow-icon"><i class="fa-brands fa-facebook-f"></i></a>
+                        <a href="https://x.com/kinan4757437" target="_blank" class="follow-icon"><i class="fa-brands fa-x-twitter"></i></a>
+                        <a href="https://t.me/theglobalscreen" target="_blank" class="follow-icon"><i class="fa-brands fa-telegram"></i></a>
+                        <a href="https://www.linkedin.com/in/kinan-alslman-a02952281" target="_blank" class="follow-icon"><i class="fa-brands fa-linkedin-in"></i></a>
+                        <a href="https://www.reddit.com/u/Both-Abalone4350/s/brbbQ0AQWi" target="_blank" class="follow-icon"><i class="fa-brands fa-reddit-alien"></i></a>
+                    </div>
+                </div>
+            </div>
             <a href="#" class="login-box" id="loginBtn">LOGIN</a>
         </div>
     </header>
@@ -325,18 +328,9 @@
     <!-- Grid -->
     <div class="grid-wrapper" id="gridWrapper">
         <img src="https://raw.githubusercontent.com/kinan-creator/the-global-screen/main/the-global-screen%20(2).png" id="gridImage" alt="The Global Screen Grid">
-        <!-- Block overlays will be injected here by JS -->
     </div>
 
-    <div class="interaction-area">
-        <div class="trending-pill">
-            <i class="fa-solid fa-fire-flame-curved"></i>
-            <span id="trendingText">TOP 25 MOST CLICKED SPACES</span>
-        </div>
-        <button class="btn-claim" id="openModal">Claim Your Spot Now</button>
-    </div>
-
-    <!-- Popup -->
+    <!-- Block Popup -->
     <div class="block-popup" id="blockPopup">
         <div class="popup-header">
             <div>
@@ -351,19 +345,18 @@
             <span id="popupLinkText">—</span>
         </a>
         <div class="popup-stats">
-            <div class="popup-stat">
-                <span class="popup-stat-label">Clicks</span>
-                <span class="popup-stat-val" id="popupClicks">0</span>
-            </div>
-            <div class="popup-stat">
-                <span class="popup-stat-label">Size</span>
-                <span class="popup-stat-val" id="popupSize">—</span>
-            </div>
-            <div class="popup-stat">
-                <span class="popup-stat-label">Pixels</span>
-                <span class="popup-stat-val" id="popupPixels">—</span>
-            </div>
+            <div class="popup-stat"><span class="popup-stat-label">Clicks</span><span class="popup-stat-val" id="popupClicks">0</span></div>
+            <div class="popup-stat"><span class="popup-stat-label">Size</span><span class="popup-stat-val" id="popupSize">—</span></div>
+            <div class="popup-stat"><span class="popup-stat-label">Pixels</span><span class="popup-stat-val" id="popupPixels">—</span></div>
         </div>
+    </div>
+
+    <div class="interaction-area">
+        <div class="trending-pill">
+            <i class="fa-solid fa-fire-flame-curved"></i>
+            <span id="trendingText">TOP 25 MOST CLICKED SPACES</span>
+        </div>
+        <button class="btn-claim" id="openModal">Claim Your Spot Now</button>
     </div>
 
     <!-- Modal -->
@@ -372,9 +365,7 @@
             <div id="step1">
                 <h2>Account Access</h2>
                 <p>Sign in to claim your spot on the global grid</p>
-                <button class="btn-google" id="btnGoogle">
-                    <i class="fa-brands fa-google" style="color:#4285F4;"></i> Continue with Google
-                </button>
+                <button class="btn-google" id="btnGoogle"><i class="fa-brands fa-google" style="color:#4285F4;"></i> Continue with Google</button>
                 <div class="divider">OR</div>
                 <input type="email" id="emailInput" placeholder="Email Address">
                 <input type="password" id="passwordInput" placeholder="Password">
@@ -383,19 +374,14 @@
                 <button class="btn-submit" id="btnEmailLogin">Login with Email</button>
                 <button class="btn-submit" style="background:transparent;color:var(--neon-cyan);border:2px solid var(--neon-cyan);margin-top:10px;" id="btnEmailRegister">Create Account</button>
             </div>
-
             <div id="step2" style="display:none;">
                 <h2>Claim Your Spot</h2>
                 <p>Fill in your details to complete ownership</p>
                 <input type="text" id="userName" placeholder="Your Full Name">
                 <input type="text" id="userLink" placeholder="Website or Social Link">
-                <label class="upload-label" for="fileInput">
-                    <i class="fa-solid fa-cloud-arrow-up"></i>
-                    Upload Your Image
-                </label>
+                <label class="upload-label" for="fileInput"><i class="fa-solid fa-cloud-arrow-up"></i>Upload Your Image</label>
                 <input type="file" id="fileInput" accept="image/*">
                 <div id="fileName"></div>
-
                 <div class="pixel-size-box">
                     <label>Select Your Space Size (min 10×10)</label>
                     <div class="size-inputs">
@@ -410,7 +396,6 @@
                         <div class="ps-item"><span class="ps-label">Size</span><span class="ps-val" id="sizeLabel">10×10</span></div>
                     </div>
                 </div>
-
                 <div class="payment-section">
                     <p>Choose Payment Method</p>
                     <div class="payment-btns">
@@ -440,45 +425,66 @@
         <button class="btn-claim" style="margin-top:40px;padding:15px 50px;font-size:14px;" onclick="location.reload()">Back to Grid</button>
     </div>
 
+    <!-- Footer -->
     <footer>
         <div class="footer-grid">
+            <!-- Col 1: Brand -->
             <div class="f-col">
                 <div class="logo"><span>The</span> Global Screen</div>
-                <p style="color:#64748b;font-size:13px;margin-top:20px;line-height:1.8;">The world's first decentralized digital advertising wall. Secure your legacy on the global grid.</p>
-                <div class="social-icons">
-                    <a href="#"><i class="fa-brands fa-x-twitter"></i></a>
-                    <a href="#"><i class="fa-brands fa-instagram"></i></a>
-                    <a href="#"><i class="fa-brands fa-tiktok"></i></a>
-                    <a href="#"><i class="fa-brands fa-facebook-f"></i></a>
-                    <a href="#"><i class="fa-brands fa-discord"></i></a>
+                <p>The world's first decentralized pixel grid. Own your space, drive traffic, and secure your digital legacy.</p>
+                <div class="footer-social">
+                    <a href="https://www.instagram.com/kinan_alslman?igsh=MTkwaTh6Y3A1bXk0ag==" target="_blank"><i class="fa-brands fa-instagram"></i></a>
+                    <a href="https://www.facebook.com/kinan.h.alsalman?mibextid=ZbWKwL" target="_blank"><i class="fa-brands fa-facebook-f"></i></a>
+                    <a href="https://x.com/kinan4757437" target="_blank"><i class="fa-brands fa-x-twitter"></i></a>
+                    <a href="https://t.me/theglobalscreen" target="_blank"><i class="fa-brands fa-telegram"></i></a>
+                    <a href="https://www.linkedin.com/in/kinan-alslman-a02952281" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
+                    <a href="https://www.reddit.com/u/Both-Abalone4350/s/brbbQ0AQWi" target="_blank"><i class="fa-brands fa-reddit-alien"></i></a>
                 </div>
+                <a href="https://t.me/theglobalscreen" target="_blank" class="discord-btn">
+                    <i class="fa-brands fa-telegram"></i> Join Our Community
+                </a>
             </div>
+            <!-- Col 2: Global Insights -->
             <div class="f-col">
-                <h4>Resources</h4>
-                <ul><li><a href="#">How it works</a></li><li><a href="#">Pixel Map</a></li><li><a href="#">API Documentation</a></li></ul>
+                <h4>Global Insights</h4>
+                <ul>
+                    <li><a href="#">Top 25 Clicks</a></li>
+                    <li><a href="#">Live Pixel Map</a></li>
+                    <li><a href="#">Resale Marketplace <span class="coming-soon">SOON</span></a></li>
+                </ul>
             </div>
+            <!-- Col 3: Help Center -->
+            <div class="f-col">
+                <h4>Help Center</h4>
+                <ul>
+                    <li><a href="how-it-works.html">How It Works</a></li>
+                    <li><a href="#">Advertising Guide</a></li>
+                    <li><a href="support.html">Direct Support</a></li>
+                </ul>
+            </div>
+            <!-- Col 4: Legal & Trust -->
             <div class="f-col">
                 <h4>Legal</h4>
-                <ul><li><a href="#">Privacy Policy</a></li><li><a href="#">Terms of Service</a></li><li><a href="#">Refund Policy</a></li></ul>
-            </div>
-            <div class="f-col">
-                <h4>Trust & Security</h4>
-                <div style="color:#64748b;font-size:13px;line-height:3.0;">
-                    <p><i class="fa-solid fa-circle-check" style="color:var(--neon-cyan);"></i> Official Art Digital Project</p>
-                    <p><i class="fa-brands fa-stripe" style="font-size:20px;color:white;"></i> Verified Payments</p>
-                    <p><i class="fa-solid fa-shield-halved"></i> SSL 256-bit Encryption</p>
+                <ul>
+                    <li><a href="terms.html">Terms of Service</a></li>
+                    <li><a href="privacy.html">Privacy Policy</a></li>
+                    <li><a href="refund.html">Refund Policy</a></li>
+                </ul>
+                <div class="trust-badges">
+                    <div class="trust-badge"><i class="fa-solid fa-lock"></i> Secure Payments (Stripe & PayPal)</div>
+                    <div class="trust-badge"><i class="fa-solid fa-bolt"></i> Fast Processing (5–10 min)</div>
                 </div>
             </div>
         </div>
         <div class="footer-bottom">
             <div>&copy; 2026 The Global Screen. Managed by <a href="#" class="kinan-tag">Kinan Alslman</a>.</div>
-            <div><span class="status-dot"></span> Status: <span style="color:#00ff88;">Operational</span> &nbsp;&nbsp; v1.2.5</div>
+            <div class="center global-traffic">Global Traffic: <span id="totalClicksDisplay">0</span> Clicks Delivered</div>
+            <div class="right"><span class="status-dot"></span> System Status: <span style="color:#00ff88;">Operational</span></div>
         </div>
     </footer>
 
     <script>
         emailjs.init('ew1xo1RoaHDx1re7b');
-
         const { createClient } = supabase;
         const sb = createClient(
             'https://srrsldjzjdpbewgjloli.supabase.co',
@@ -487,6 +493,16 @@
 
         const GRID_SIZE = 3000;
         let allBlocks = [];
+
+        // ====== FOLLOW US DROPDOWN ======
+        document.getElementById('followBtn').addEventListener('click', (e) => {
+            e.preventDefault();
+            document.getElementById('followDropdown').classList.toggle('open');
+        });
+        document.addEventListener('click', (e) => {
+            const fw = document.querySelector('.follow-wrapper');
+            if (!fw.contains(e.target)) document.getElementById('followDropdown').classList.remove('open');
+        });
 
         // ====== COUNTERS ======
         async function loadCounters() {
@@ -502,28 +518,26 @@
             loadCounters();
         }
 
-        // ====== LOAD BLOCKS & BUILD OVERLAYS ======
+        // ====== BLOCKS ======
         async function loadBlocks() {
             const { data } = await sb.from('blocks').select('*');
             if (!data) return;
             allBlocks = data;
             renderOverlays();
             updateTrending();
+            updateTotalClicks();
         }
 
         function renderOverlays() {
             const wrapper = document.getElementById('gridWrapper');
             const img = document.getElementById('gridImage');
-            // احذف الـ overlays القديمة
             wrapper.querySelectorAll('.block-overlay').forEach(el => el.remove());
-
             const imgW = img.offsetWidth;
             const imgH = img.offsetHeight;
             const scaleX = imgW / GRID_SIZE;
             const scaleY = imgH / GRID_SIZE;
-
             allBlocks.forEach(block => {
-                if (!block.pos_x && block.pos_x !== 0) return;
+                if (block.pos_x === null || block.pos_x === undefined) return;
                 const el = document.createElement('div');
                 el.className = 'block-overlay';
                 el.dataset.id = block.id;
@@ -538,12 +552,9 @@
 
         // ====== POPUP ======
         async function showPopup(block, e) {
-            // زيادة عدد النقرات
             const newClicks = (block.clicks || 0) + 1;
             await sb.from('blocks').update({ clicks: newClicks }).eq('id', block.id);
             block.clicks = newClicks;
-
-            const popup = document.getElementById('blockPopup');
             document.getElementById('popupName').textContent    = block.user_name || '—';
             document.getElementById('popupId').textContent      = '#2026-TGS-' + String(block.id).padStart(5,'0');
             document.getElementById('popupImg').src             = block.image_url || '';
@@ -551,85 +562,74 @@
             document.getElementById('popupLinkText').textContent = block.pixel_link || '—';
             document.getElementById('popupClicks').textContent  = newClicks.toLocaleString();
             document.getElementById('popupSize').textContent    = (block.width||'?') + '×' + (block.height||'?');
-            document.getElementById('popupPixels').textContent  = (block.total_pixels || '?').toLocaleString();
-
-            // موقع الـ popup
+            document.getElementById('popupPixels').textContent  = (block.total_pixels||'?').toLocaleString();
+            const popup = document.getElementById('blockPopup');
             popup.style.display = 'block';
             const px = Math.min(e.clientX + 15, window.innerWidth - 330);
             const py = Math.min(e.clientY - 20, window.innerHeight - 400);
             popup.style.left = px + 'px';
             popup.style.top  = py + 'px';
-
             updateTrending();
+            updateTotalClicks();
         }
 
-        document.getElementById('popupClose').onclick = () => {
-            document.getElementById('blockPopup').style.display = 'none';
-        };
-
+        document.getElementById('popupClose').onclick = () => document.getElementById('blockPopup').style.display = 'none';
         document.addEventListener('click', (e) => {
             const popup = document.getElementById('blockPopup');
-            if (!popup.contains(e.target)) popup.style.display = 'none';
+            if (popup.style.display === 'block' && !popup.contains(e.target)) popup.style.display = 'none';
         });
 
-        // ====== TRENDING TOP 25 ======
+        // ====== TOP 25 TRENDING ======
         function updateTrending() {
             const sorted = [...allBlocks].sort((a,b) => (b.clicks||0) - (a.clicks||0)).slice(0,25);
-            const names  = sorted.map(b => b.user_name).filter(Boolean).join(' · ');
-            document.getElementById('trendingText').textContent = names || 'TOP 25 MOST CLICKED SPACES';
+            if (!sorted.length) return;
+            const text = sorted.map((b,i) => `${i+1}. ${b.user_name||'—'} (${b.clicks||0})`).join('  ·  ');
+            document.getElementById('trendingText').textContent = text;
+        }
+
+        function updateTotalClicks() {
+            const total = allBlocks.reduce((sum, b) => sum + (b.clicks||0), 0);
+            document.getElementById('totalClicksDisplay').textContent = total.toLocaleString();
         }
 
         // ====== SEARCH ======
         const searchInput   = document.getElementById('searchInput');
         const searchResults = document.getElementById('searchResults');
-
         searchInput.addEventListener('input', () => {
             const q = searchInput.value.trim().toLowerCase();
             if (!q) { searchResults.style.display = 'none'; return; }
-
             const matches = allBlocks.filter(b =>
-                (b.user_name && b.user_name.toLowerCase().includes(q)) ||
-                String(b.id).includes(q)
-            ).slice(0, 8);
-
+                (b.user_name && b.user_name.toLowerCase().includes(q)) || String(b.id).includes(q)
+            ).slice(0,8);
             if (!matches.length) { searchResults.style.display = 'none'; return; }
-
             searchResults.innerHTML = matches.map(b => `
                 <div class="search-result-item" data-id="${b.id}">
-                    <div class="sri-name">${b.user_name || 'Unknown'}</div>
+                    <div class="sri-name">${b.user_name||'Unknown'}</div>
                     <div class="sri-id">#2026-TGS-${String(b.id).padStart(5,'0')}</div>
                 </div>
             `).join('');
             searchResults.style.display = 'block';
-
             searchResults.querySelectorAll('.search-result-item').forEach(item => {
                 item.onclick = () => {
                     const block = allBlocks.find(b => b.id == item.dataset.id);
                     if (!block) return;
-                    searchResults.style.display = 'none';
-                    searchInput.value = '';
-                    // highlight
+                    searchResults.style.display = 'none'; searchInput.value = '';
                     document.querySelectorAll('.block-overlay').forEach(el => el.classList.remove('highlighted'));
                     const overlay = document.querySelector(`.block-overlay[data-id="${block.id}"]`);
                     if (overlay) {
                         overlay.classList.add('highlighted');
                         overlay.scrollIntoView({ behavior: 'smooth', block: 'center' });
                         setTimeout(() => overlay.classList.remove('highlighted'), 3000);
+                        const rect = overlay.getBoundingClientRect();
+                        showPopup(block, { clientX: rect.left + overlay.offsetWidth/2, clientY: rect.top });
                     }
-                    // fake event for popup
-                    const rect = overlay ? overlay.getBoundingClientRect() : { clientX: window.innerWidth/2, clientY: window.innerHeight/2 };
-                    showPopup(block, { clientX: rect.left + (overlay?.offsetWidth||0)/2, clientY: rect.top });
                 };
             });
         });
-
         document.addEventListener('click', (e) => {
-            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
-                searchResults.style.display = 'none';
-            }
+            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) searchResults.style.display = 'none';
         });
 
-        // ====== RE-RENDER ON RESIZE ======
         window.addEventListener('resize', renderOverlays);
         document.getElementById('gridImage').addEventListener('load', renderOverlays);
 
@@ -649,27 +649,15 @@
 
         sb.auth.getSession().then(({ data: { session } }) => { if (session) showUserBar(session.user); });
         sb.auth.onAuthStateChange((event, session) => {
-            if (session) {
-                showUserBar(session.user);
-                if (event === 'SIGNED_IN' && overlay.style.display === 'flex') {
-                    step1.style.display = 'none'; step2.style.display = 'block';
-                }
-            } else hideUserBar();
+            if (session) { showUserBar(session.user); if (event === 'SIGNED_IN' && overlay.style.display === 'flex') { step1.style.display = 'none'; step2.style.display = 'block'; } }
+            else hideUserBar();
         });
-
-        function showUserBar(user) {
-            userBarWrap.style.display = 'block'; userBar.style.display = 'flex';
-            userEmail.textContent = user.email || user.user_metadata?.full_name || 'User';
-            userAvatar.src = user.user_metadata?.avatar_url || '';
-            if (!userAvatar.src) userAvatar.style.display = 'none';
-            document.getElementById('loginBtn').textContent = 'MY ACCOUNT';
-        }
+        function showUserBar(user) { userBarWrap.style.display = 'block'; userBar.style.display = 'flex'; userEmail.textContent = user.email || user.user_metadata?.full_name || 'User'; userAvatar.src = user.user_metadata?.avatar_url || ''; if (!userAvatar.src) userAvatar.style.display = 'none'; document.getElementById('loginBtn').textContent = 'MY ACCOUNT'; }
         function hideUserBar() { userBarWrap.style.display = 'none'; document.getElementById('loginBtn').textContent = 'LOGIN'; }
 
         document.getElementById('openModal').onclick = async () => {
             const { data: { session } } = await sb.auth.getSession();
-            if (session) { step1.style.display = 'none'; step2.style.display = 'block'; }
-            else { step1.style.display = 'block'; step2.style.display = 'none'; }
+            if (session) { step1.style.display = 'none'; step2.style.display = 'block'; } else { step1.style.display = 'block'; step2.style.display = 'none'; }
             overlay.style.display = 'flex';
         };
         document.getElementById('loginBtn').onclick = (e) => { e.preventDefault(); overlay.style.display = 'flex'; };
@@ -679,7 +667,6 @@
             const { error } = await sb.auth.signInWithOAuth({ provider: 'google', options: { redirectTo: window.location.href } });
             if (error) showError(authError, error.message);
         };
-
         document.getElementById('btnEmailLogin').onclick = async () => {
             const email = document.getElementById('emailInput').value.trim();
             const pass  = document.getElementById('passwordInput').value;
@@ -687,10 +674,8 @@
             setBtnLoading('btnEmailLogin', true);
             const { error } = await sb.auth.signInWithPassword({ email, password: pass });
             setBtnLoading('btnEmailLogin', false);
-            if (error) showError(authError, error.message);
-            else { step1.style.display = 'none'; step2.style.display = 'block'; }
+            if (error) showError(authError, error.message); else { step1.style.display = 'none'; step2.style.display = 'block'; }
         };
-
         document.getElementById('btnEmailRegister').onclick = async () => {
             const email = document.getElementById('emailInput').value.trim();
             const pass  = document.getElementById('passwordInput').value;
@@ -699,11 +684,9 @@
             setBtnLoading('btnEmailRegister', true);
             const { error } = await sb.auth.signUp({ email, password: pass });
             setBtnLoading('btnEmailRegister', false);
-            if (error) showError(authError, error.message);
-            else showSuccess(authSuccess, 'Account created! Check your email to confirm, then login.');
+            if (error) showError(authError, error.message); else showSuccess(authSuccess, 'Account created! Check your email to confirm, then login.');
         };
 
-        // ====== PIXEL CALC ======
         function updatePixelCalc() {
             let w = parseInt(document.getElementById('pixelW').value) || 10;
             let h = parseInt(document.getElementById('pixelH').value) || 10;
@@ -716,10 +699,8 @@
         }
         document.getElementById('pixelW').addEventListener('blur', updatePixelCalc);
         document.getElementById('pixelH').addEventListener('blur', updatePixelCalc);
-
         fileInput.onchange = () => { if (fileInput.files[0]) fileName.textContent = '✓ ' + fileInput.files[0].name; };
 
-        // ====== CLAIM ======
         document.getElementById('btnPaypal').onclick = () => processClaim('PayPal');
         document.getElementById('btnStripe').onclick = () => processClaim('Stripe');
 
@@ -730,80 +711,38 @@
             let w = parseInt(document.getElementById('pixelW').value) || 10;
             let h = parseInt(document.getElementById('pixelH').value) || 10;
             if (w < 10) w = 10; if (h < 10) h = 10;
-            const totalPixels = w * h;
-            const totalPrice  = totalPixels;
-
+            const totalPixels = w * h, totalPrice = totalPixels;
             if (!name) return showError(claimError, 'Please enter your name.');
             if (!file) return showError(claimError, 'Please upload an image.');
-
             document.getElementById('btnPaypal').disabled = true;
             document.getElementById('btnStripe').disabled = true;
-
-            const fileExt  = file.name.split('.').pop();
+            const fileExt = file.name.split('.').pop();
             const filePath = `${Date.now()}-${Math.random().toString(36).slice(2)}.${fileExt}`;
             const { error: uploadError } = await sb.storage.from('pixel-images').upload(filePath, file);
-
-            if (uploadError) {
-                document.getElementById('btnPaypal').disabled = false;
-                document.getElementById('btnStripe').disabled = false;
-                return showError(claimError, 'Image upload failed: ' + uploadError.message);
-            }
-
+            if (uploadError) { document.getElementById('btnPaypal').disabled = false; document.getElementById('btnStripe').disabled = false; return showError(claimError, 'Image upload failed: ' + uploadError.message); }
             const { data: urlData } = sb.storage.from('pixel-images').getPublicUrl(filePath);
             const imageUrl = urlData.publicUrl;
-
-            const { data: inserted, error: dbError } = await sb.from('blocks').insert([{
-                user_name: name, pixel_link: link, image_url: imageUrl,
-                width: w, height: h, total_pixels: totalPixels,
-                total_price: totalPrice, payment: paymentMethod, clicks: 0
-            }]).select().single();
-
-            if (dbError) {
-                document.getElementById('btnPaypal').disabled = false;
-                document.getElementById('btnStripe').disabled = false;
-                return showError(claimError, 'Save failed: ' + dbError.message);
-            }
-
-            // تحديث عداد البكسلات
+            const { data: inserted, error: dbError } = await sb.from('blocks').insert([{ user_name: name, pixel_link: link, image_url: imageUrl, width: w, height: h, total_pixels: totalPixels, total_price: totalPrice, payment: paymentMethod, clicks: 0 }]).select().single();
+            if (dbError) { document.getElementById('btnPaypal').disabled = false; document.getElementById('btnStripe').disabled = false; return showError(claimError, 'Save failed: ' + dbError.message); }
             const { data: pp } = await sb.from('pixels').select('count').eq('id',1).single();
             if (pp) await sb.from('pixels').update({ count: pp.count - totalPixels }).eq('id',1);
             loadCounters();
-
-            // إرسال إيميل
             const { data: { user } } = await sb.auth.getUser();
             const certId = '#2026-TGS-' + String(inserted.id).padStart(5,'0');
-            await emailjs.send('service_26ecvjv', 'template_t250i1z', {
-                user_name: name, user_email: user ? user.email : 'Unknown',
-                user_link: link, width: w, height: h,
-                total_pixels: totalPixels, total_price: '$' + totalPrice,
-                image_url: imageUrl
-            });
-
-            // إظهار الشهادة
+            await emailjs.send('service_26ecvjv', 'template_t250i1z', { user_name: name, user_email: user ? user.email : 'Unknown', user_link: link, width: w, height: h, total_pixels: totalPixels, total_price: '$' + totalPrice, image_url: imageUrl });
             document.getElementById('targetName').innerText = name.toUpperCase();
             document.getElementById('certId').textContent   = certId;
             overlay.style.display = 'none';
             document.getElementById('certView').style.display = 'flex';
-
-            // تحديث الـ blocks
-            allBlocks.push(inserted);
-            renderOverlays();
+            allBlocks.push(inserted); renderOverlays();
         }
 
         document.getElementById('logoutBtn').onclick = async () => { await sb.auth.signOut(); };
-
         function showError(el, msg) { el.textContent = msg; el.style.display = 'block'; setTimeout(() => el.style.display = 'none', 5000); }
         function showSuccess(el, msg) { el.textContent = msg; el.style.display = 'block'; }
-        function setBtnLoading(id, loading) {
-            const btn = document.getElementById(id);
-            btn.disabled = loading;
-            btn.textContent = loading ? 'Please wait...' : btn.dataset.label || btn.textContent;
-        }
+        function setBtnLoading(id, loading) { const btn = document.getElementById(id); btn.disabled = loading; btn.textContent = loading ? 'Please wait...' : btn.dataset.label || btn.textContent; }
 
-        // ====== INIT ======
-        loadCounters();
-        trackVisit();
-        loadBlocks();
+        loadCounters(); trackVisit(); loadBlocks();
     </script>
 </body>
 </html>
