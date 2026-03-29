@@ -20,17 +20,24 @@
             0%, 100% { box-shadow: 0 0 12px rgba(0,242,255,0.4), 0 0 20px rgba(0,242,255,0.1); border-color: rgba(0,242,255,0.6); }
             50% { box-shadow: 0 0 25px rgba(0,242,255,0.8), 0 0 45px rgba(0,242,255,0.4); border-color: rgba(0,242,255,1); }
         }
-
         @keyframes popupIn {
             from { opacity: 0; transform: scale(0.85) translateY(10px); }
             to { opacity: 1; transform: scale(1) translateY(0); }
         }
-
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(-8px); }
             to { opacity: 1; transform: translateY(0); }
         }
+        @keyframes certGlow {
+            0%, 100% { box-shadow: 0 0 30px rgba(0,242,255,0.3), inset 0 0 30px rgba(0,242,255,0.05); }
+            50% { box-shadow: 0 0 60px rgba(0,242,255,0.6), inset 0 0 60px rgba(0,242,255,0.1); }
+        }
+        @keyframes highlightPulse {
+            0%, 100% { box-shadow: 0 0 0 3px var(--neon-cyan); }
+            50% { box-shadow: 0 0 0 8px rgba(0,242,255,0.3); }
+        }
 
+        * { box-sizing: border-box; }
         body {
             margin: 0 auto; padding: 0;
             background-color: var(--bg-deep);
@@ -39,13 +46,8 @@
             width: 1280px; overflow-x: hidden;
         }
 
-        /* --- Header --- */
-        header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 25px 60px; border-bottom: 1px solid var(--border-glass);
-            background: rgba(5,10,15,0.5); backdrop-filter: blur(10px);
-            position: relative;
-        }
+        /* Header */
+        header { display: flex; justify-content: space-between; align-items: center; padding: 25px 60px; border-bottom: 1px solid var(--border-glass); background: rgba(5,10,15,0.5); backdrop-filter: blur(10px); position: relative; }
         .logo { font-size: 24px; font-weight: 700; }
         .logo span { color: var(--neon-cyan); text-shadow: 0 0 10px rgba(0,242,255,0.5); }
         .nav-links { display: flex; gap: 35px; align-items: center; }
@@ -54,94 +56,42 @@
         .login-box { border: 1px solid rgba(255,255,255,0.2); padding: 8px 22px; border-radius: 8px; background: rgba(255,255,255,0.03); transition: 0.3s; cursor: pointer; }
         .login-box:hover { background: white; color: black !important; }
 
-        /* --- Follow Us Dropdown --- */
+        /* Follow dropdown */
         .follow-wrapper { position: relative; }
-        .follow-dropdown {
-            position: absolute; top: calc(100% + 15px); left: 50%; transform: translateX(-50%);
-            background: #0d1117; border: 1px solid var(--neon-cyan);
-            border-radius: 16px; padding: 20px 24px;
-            display: none; z-index: 999;
-            box-shadow: 0 20px 50px rgba(0,0,0,0.8), 0 0 30px rgba(0,242,255,0.1);
-            animation: fadeIn 0.2s ease;
-            white-space: nowrap;
-        }
+        .follow-dropdown { position: absolute; top: calc(100% + 15px); left: 50%; transform: translateX(-50%); background: #0d1117; border: 1px solid var(--neon-cyan); border-radius: 16px; padding: 20px 24px; display: none; z-index: 999; box-shadow: 0 20px 50px rgba(0,0,0,0.8); animation: fadeIn 0.2s ease; white-space: nowrap; }
         .follow-dropdown.open { display: block; }
         .follow-dropdown-title { font-size: 10px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 16px; }
         .follow-icons { display: flex; gap: 12px; }
-        .follow-icon {
-            width: 44px; height: 44px; border-radius: 12px;
-            background: rgba(255,255,255,0.04); border: 1px solid #1e293b;
-            display: flex; align-items: center; justify-content: center;
-            color: #94a3b8; text-decoration: none; font-size: 18px;
-            transition: 0.25s;
-        }
-        .follow-icon:hover { border-color: var(--neon-cyan); color: var(--neon-cyan); transform: translateY(-3px); background: rgba(0,242,255,0.06); }
+        .follow-icon { width: 44px; height: 44px; border-radius: 12px; background: rgba(255,255,255,0.04); border: 1px solid #1e293b; display: flex; align-items: center; justify-content: center; color: #94a3b8; text-decoration: none; font-size: 18px; transition: 0.25s; }
+        .follow-icon:hover { border-color: var(--neon-cyan); color: var(--neon-cyan); transform: translateY(-3px); }
 
-        /* --- Stats Row --- */
+        /* Stats */
         .stats-row { display: flex; justify-content: space-between; align-items: center; padding: 50px 60px; }
         .search-box { width: 400px; position: relative; }
-        .search-box input {
-            width: 100%; background: rgba(0,0,0,0.3); border: 2px solid var(--neon-cyan);
-            padding: 15px 45px; border-radius: 12px; color: white; outline: none;
-            font-family: inherit; animation: neonPulse 3s infinite ease-in-out;
-        }
+        .search-box input { width: 100%; background: rgba(0,0,0,0.3); border: 2px solid var(--neon-cyan); padding: 15px 45px; border-radius: 12px; color: white; outline: none; font-family: inherit; animation: neonPulse 3s infinite ease-in-out; }
         .search-box input::placeholder { color: var(--text-muted); }
         .search-box i { position: absolute; left: 18px; top: 50%; transform: translateY(-50%); color: var(--neon-cyan); }
-        .search-results {
-            position: absolute; top: 60px; left: 0; width: 100%;
-            background: #0d1117; border: 1px solid var(--neon-cyan);
-            border-radius: 12px; z-index: 1000; display: none; overflow: hidden;
-        }
+        .search-results { position: absolute; top: 60px; left: 0; width: 100%; background: #0d1117; border: 1px solid var(--neon-cyan); border-radius: 12px; z-index: 1000; display: none; overflow: hidden; }
         .search-result-item { padding: 12px 18px; cursor: pointer; transition: 0.2s; border-bottom: 1px solid #1e293b; font-size: 13px; }
         .search-result-item:hover { background: rgba(0,242,255,0.05); }
         .search-result-item:last-child { border-bottom: none; }
         .sri-name { font-weight: 700; color: white; }
         .sri-id { font-size: 10px; color: var(--neon-cyan); margin-top: 2px; }
-
         .metrics { display: flex; gap: 60px; }
         .metric-item { text-align: left; }
         .label { display: block; color: var(--text-muted); font-size: 10px; text-transform: uppercase; margin-bottom: 8px; letter-spacing: 1px; }
         .val { font-size: 30px; font-weight: 700; color: #f8fafc; }
         .metric-item::after { content: ''; display: block; width: 40px; height: 3px; background: var(--neon-cyan); margin-top: 10px; border-radius: 2px; box-shadow: 0 0 15px var(--neon-cyan); }
 
-        /* --- Grid --- */
-        .grid-wrapper {
-            margin: 0 20px;
-            border: 1px solid var(--border-glass);
-            border-radius: 24px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.6);
-            position: relative;
-            background: #05080c;
-            cursor: crosshair;
-        }
-        .grid-wrapper img {
-            width: 100%;
-            display: block;
-            transform: scale(1.12);
-            transform-origin: center center;
-        }
-        .block-overlay {
-            position: absolute; cursor: pointer;
-            border: 2px solid transparent; transition: border-color 0.2s, background 0.2s;
-            border-radius: 4px;
-        }
+        /* Grid */
+        .grid-wrapper { margin: 0 20px; border: 1px solid var(--border-glass); border-radius: 24px; overflow: hidden; box-shadow: 0 20px 60px rgba(0,0,0,0.6); position: relative; background: #05080c; cursor: crosshair; }
+        .grid-wrapper img { width: 100%; display: block; transform: scale(1.12); transform-origin: center center; }
+        .block-overlay { position: absolute; cursor: pointer; border: 2px solid transparent; transition: border-color 0.2s, background 0.2s; border-radius: 4px; }
         .block-overlay:hover { border-color: var(--neon-cyan); background: rgba(0,242,255,0.08); }
-
-        @keyframes highlightPulse {
-            0%, 100% { box-shadow: 0 0 0 3px var(--neon-cyan); }
-            50% { box-shadow: 0 0 0 8px rgba(0,242,255,0.3); }
-        }
         .block-overlay.highlighted { border-color: var(--neon-cyan) !important; background: rgba(0,242,255,0.15) !important; animation: highlightPulse 1s ease infinite; }
 
-        /* --- Block Popup --- */
-        .block-popup {
-            position: fixed; z-index: 5000;
-            background: #0d1117; border: 1.5px solid var(--neon-cyan);
-            border-radius: 20px; padding: 28px 30px; width: 300px;
-            box-shadow: 0 0 40px rgba(0,242,255,0.2), 0 20px 60px rgba(0,0,0,0.8);
-            animation: popupIn 0.25s ease; display: none;
-        }
+        /* Block Popup */
+        .block-popup { position: fixed; z-index: 5000; background: #0d1117; border: 1.5px solid var(--neon-cyan); border-radius: 20px; padding: 28px 30px; width: 300px; box-shadow: 0 0 40px rgba(0,242,255,0.2), 0 20px 60px rgba(0,0,0,0.8); animation: popupIn 0.25s ease; display: none; }
         .popup-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 18px; }
         .popup-name { font-size: 17px; font-weight: 800; color: white; }
         .popup-close { background: none; border: none; color: #475569; cursor: pointer; font-size: 18px; padding: 0; line-height: 1; }
@@ -155,88 +105,140 @@
         .popup-stat-label { font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 4px; }
         .popup-stat-val { font-size: 16px; font-weight: 800; color: white; }
 
-        /* --- Interaction Area --- */
+        /* Interaction */
         .interaction-area { display: flex; justify-content: center; align-items: center; padding: 60px 60px 100px; position: relative; }
-        .trending-pill {
-            position: absolute; left: 60px;
-            background: rgba(15,23,42,0.6); border: 1px solid var(--border-glass);
-            padding: 12px 26px; border-radius: 50px;
-            display: flex; align-items: center; gap: 12px;
-            font-size: 11px; font-weight: 600; color: #a1aab7; letter-spacing: 1.2px;
-            backdrop-filter: blur(8px); max-width: 400px; overflow: hidden;
-        }
+        .trending-pill { position: absolute; left: 60px; background: rgba(15,23,42,0.6); border: 1px solid var(--border-glass); padding: 12px 26px; border-radius: 50px; display: flex; align-items: center; gap: 12px; font-size: 11px; font-weight: 600; color: #a1aab7; letter-spacing: 1.2px; backdrop-filter: blur(8px); max-width: 400px; overflow: hidden; }
         .trending-pill i { color: var(--neon-cyan); flex-shrink: 0; }
         #trendingText { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-
-        .btn-claim {
-            background: linear-gradient(135deg, #0f151e 0%, #05080b 100%); 
-            color: #fff; border: 2.5px solid var(--neon-cyan);
-            padding: 26px 95px; border-radius: 16px; font-size: 19px; font-weight: 800;
-            cursor: pointer; text-transform: uppercase; transition: 0.4s; letter-spacing: 2px;
-            animation: neonPulse 2s infinite ease-in-out;
-        }
+        .btn-claim { background: linear-gradient(135deg, #0f151e 0%, #05080b 100%); color: #fff; border: 2.5px solid var(--neon-cyan); padding: 26px 95px; border-radius: 16px; font-size: 19px; font-weight: 800; cursor: pointer; text-transform: uppercase; transition: 0.4s; letter-spacing: 2px; animation: neonPulse 2s infinite ease-in-out; }
         .btn-claim:hover { transform: translateY(-5px); box-shadow: 0 15px 40px rgba(0,242,255,0.4); color: var(--neon-cyan); }
 
-        /* --- Modal --- */
-        .modal-overlay {
-            position: fixed; inset: 0; background: rgba(2,6,23,0.95);
-            display: none; justify-content: center; align-items: center; z-index: 2000;
-            backdrop-filter: blur(12px);
-        }
-        .modal-content {
-            background: #0f172a; border: 2px solid var(--neon-cyan);
-            padding: 60px; border-radius: 35px; width: 480px; text-align: center;
-            box-shadow: 0 0 50px rgba(0,242,255,0.2); max-height: 90vh; overflow-y: auto;
-        }
+        /* Modal */
+        .modal-overlay { position: fixed; inset: 0; background: rgba(2,6,23,0.95); display: none; justify-content: center; align-items: center; z-index: 2000; backdrop-filter: blur(12px); }
+        .modal-content { background: #0f172a; border: 2px solid var(--neon-cyan); padding: 50px; border-radius: 35px; width: 500px; text-align: center; box-shadow: 0 0 50px rgba(0,242,255,0.2); max-height: 92vh; overflow-y: auto; }
         .modal-content h2 { color: white; margin-bottom: 10px; text-transform: uppercase; }
-        .modal-content p { color: var(--text-muted); font-size: 13px; margin-bottom: 30px; }
-        .modal-content input { width: 100%; padding: 18px; margin: 10px 0; background: rgba(0,0,0,0.5); border: 1px solid #1e293b; color: white; border-radius: 14px; box-sizing: border-box; outline: none; font-family: inherit; font-size: 14px; }
+        .modal-content p.sub { color: var(--text-muted); font-size: 13px; margin-bottom: 25px; }
+        .modal-content input { width: 100%; padding: 16px; margin: 8px 0; background: rgba(0,0,0,0.5); border: 1px solid #1e293b; color: white; border-radius: 14px; box-sizing: border-box; outline: none; font-family: inherit; font-size: 14px; }
         .modal-content input:focus { border-color: var(--neon-cyan); }
-        .btn-google { background: white; color: black; border: none; padding: 18px; width: 100%; border-radius: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 20px; font-size: 15px; transition: 0.3s; }
-        .btn-google:hover { opacity: 0.9; transform: translateY(-2px); }
-        .divider { display: flex; align-items: center; gap: 15px; margin: 15px 0; color: #334155; font-size: 12px; }
+        .btn-google { background: white; color: black; border: none; padding: 16px; width: 100%; border-radius: 14px; font-weight: 700; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 12px; margin-bottom: 18px; font-size: 15px; transition: 0.3s; }
+        .btn-google:hover { opacity: 0.9; }
+        .divider { display: flex; align-items: center; gap: 15px; margin: 12px 0; color: #334155; font-size: 12px; }
         .divider::before, .divider::after { content: ''; flex: 1; height: 1px; background: #1e293b; }
-        .btn-submit { background: var(--neon-cyan); color: #000; border: none; width: 100%; padding: 18px; border-radius: 14px; font-weight: 800; cursor: pointer; font-size: 15px; letter-spacing: 1px; transition: 0.3s; text-transform: uppercase; margin-top: 10px; }
-        .btn-submit:hover { opacity: 0.85; transform: translateY(-2px); }
-        .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; transform: none; }
-        .error-msg { color: #f87171; font-size: 12px; margin-top: 10px; display: none; }
-        .success-msg { color: #4ade80; font-size: 12px; margin-top: 10px; display: none; }
-        .upload-label { display: block; padding: 20px; border: 2px dashed #1e293b; border-radius: 14px; margin: 10px 0; cursor: pointer; color: var(--text-muted); font-size: 13px; transition: 0.3s; text-align: center; }
+        .btn-submit { background: var(--neon-cyan); color: #000; border: none; width: 100%; padding: 16px; border-radius: 14px; font-weight: 800; cursor: pointer; font-size: 15px; letter-spacing: 1px; transition: 0.3s; text-transform: uppercase; margin-top: 8px; }
+        .btn-submit:hover { opacity: 0.85; }
+        .btn-submit:disabled { opacity: 0.5; cursor: not-allowed; }
+        .error-msg { color: #f87171; font-size: 12px; margin-top: 8px; display: none; }
+        .success-msg { color: #4ade80; font-size: 12px; margin-top: 8px; display: none; }
+        .upload-label { display: block; padding: 18px; border: 2px dashed #1e293b; border-radius: 14px; margin: 8px 0; cursor: pointer; color: var(--text-muted); font-size: 13px; transition: 0.3s; text-align: center; }
         .upload-label:hover { border-color: var(--neon-cyan); color: white; }
-        .upload-label i { display: block; font-size: 24px; margin-bottom: 8px; color: var(--neon-cyan); }
+        .upload-label i { display: block; font-size: 22px; margin-bottom: 6px; color: var(--neon-cyan); }
         #fileInput { display: none; }
-        #fileName { font-size: 11px; color: #4ade80; margin-top: 5px; }
-        .pixel-size-box { background: rgba(0,0,0,0.3); border: 1px solid #1e293b; border-radius: 14px; padding: 20px; margin: 15px 0; text-align: left; }
-        .pixel-size-box > label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 12px; }
+        #fileName { font-size: 11px; color: #4ade80; margin-top: 4px; }
+
+        /* Location Selector */
+        .location-selector { margin: 12px 0; text-align: left; }
+        .location-selector label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 10px; }
+        .location-options { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .loc-btn { padding: 12px 8px; border-radius: 12px; cursor: pointer; border: 1.5px solid #1e293b; background: #0a0e14; color: #94a3b8; font-size: 11px; font-weight: 700; transition: 0.3s; text-align: center; font-family: inherit; }
+        .loc-btn:hover { border-color: var(--neon-cyan); color: white; }
+        .loc-btn.active { border-color: var(--neon-cyan); background: rgba(0,242,255,0.08); color: var(--neon-cyan); }
+        .loc-btn .loc-price { display: block; font-size: 16px; font-weight: 800; color: var(--neon-cyan); margin-top: 4px; }
+        .loc-btn.active .loc-price { color: white; }
+
+        /* Pixel Size Box */
+        .pixel-size-box { background: rgba(0,0,0,0.3); border: 1px solid #1e293b; border-radius: 14px; padding: 18px; margin: 12px 0; text-align: left; }
+        .pixel-size-box > label { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 10px; }
         .size-inputs { display: flex; gap: 10px; align-items: center; }
         .size-inputs input { width: 80px; padding: 12px; text-align: center; margin: 0; font-size: 16px; font-weight: 700; }
         .size-inputs span { color: var(--text-muted); font-size: 18px; }
-        .pixel-summary { margin-top: 15px; padding: 15px; background: rgba(0,242,255,0.05); border: 1px solid rgba(0,242,255,0.2); border-radius: 10px; display: flex; justify-content: space-between; align-items: center; }
+        .pixel-summary { margin-top: 12px; padding: 14px; background: rgba(0,242,255,0.05); border: 1px solid rgba(0,242,255,0.2); border-radius: 10px; display: flex; justify-content: space-between; align-items: center; }
         .ps-item { text-align: center; }
         .ps-label { font-size: 9px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; display: block; margin-bottom: 4px; }
-        .ps-val { font-size: 16px; font-weight: 800; color: var(--neon-cyan); }
-        .payment-section { margin-top: 15px; }
-        .payment-section > p { font-size: 11px; color: var(--text-muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+        .ps-val { font-size: 15px; font-weight: 800; color: var(--neon-cyan); }
+
+        /* Payment */
+        .payment-section { margin-top: 12px; }
+        .payment-section > p { font-size: 11px; color: var(--text-muted); margin-bottom: 10px; text-transform: uppercase; letter-spacing: 1px; }
         .payment-btns { display: flex; gap: 10px; }
-        .pay-btn { flex: 1; padding: 14px; border-radius: 12px; cursor: pointer; border: 1px solid #1e293b; background: #0a0e14; color: white; font-size: 13px; font-weight: 700; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; }
+        .pay-btn { flex: 1; padding: 14px; border-radius: 12px; cursor: pointer; border: 1px solid #1e293b; background: #0a0e14; color: white; font-size: 13px; font-weight: 700; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 8px; font-family: inherit; }
         .pay-btn.paypal:hover { border-color: #0070ba; color: #0070ba; }
         .pay-btn.stripe:hover { border-color: #635bff; color: #635bff; }
         .pay-btn i { font-size: 18px; }
         .pay-btn:disabled { opacity: 0.5; cursor: not-allowed; }
 
-        /* --- User Bar --- */
+        /* Processing Note */
+        .processing-note { background: rgba(0,242,255,0.04); border: 1px solid rgba(0,242,255,0.15); border-radius: 12px; padding: 14px 18px; margin-top: 14px; font-size: 11px; color: #94a3b8; line-height: 1.7; text-align: left; }
+        .processing-note strong { color: var(--neon-cyan); }
+
+        /* User Bar */
         .user-bar { display: none; align-items: center; gap: 12px; background: rgba(0,242,255,0.05); border: 1px solid rgba(0,242,255,0.2); padding: 8px 16px; border-radius: 10px; font-size: 12px; color: #cbd5e1; }
         .user-bar img { width: 30px; height: 30px; border-radius: 50%; }
         .btn-logout { margin-left: auto; background: none; border: 1px solid #334155; color: #94a3b8; padding: 4px 12px; border-radius: 6px; cursor: pointer; font-size: 11px; }
         .btn-logout:hover { border-color: #f87171; color: #f87171; }
 
-        /* --- Certificate --- */
-        #certView { position: fixed; inset: 0; background: #020617; display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 3000; }
-        .cert-card { width: 900px; height: 600px; background: #080b12; border: 2px solid var(--neon-cyan); padding: 40px; position: relative; }
-        .cert-inner { border: 1px solid rgba(0,242,255,0.1); height: 100%; display: flex; flex-direction: column; justify-content: center; text-align: center; }
-        .cert-user { font-size: 60px; color: var(--neon-cyan); text-transform: uppercase; margin: 35px 0; font-weight: 800; }
+        /* ===== CERTIFICATE ===== */
+        #certView { position: fixed; inset: 0; background: radial-gradient(ellipse at center, #0a1628 0%, #020617 100%); display: none; flex-direction: column; justify-content: center; align-items: center; z-index: 3000; }
 
-        /* --- Footer --- */
+        .cert-card {
+            width: 860px; background: linear-gradient(135deg, #071428 0%, #040d1a 100%);
+            border: 2px solid var(--neon-cyan); border-radius: 8px;
+            padding: 50px; position: relative; text-align: center;
+            animation: certGlow 3s ease-in-out infinite;
+            background-image: 
+                linear-gradient(135deg, #071428 0%, #040d1a 100%),
+                url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2300f2ff' fill-opacity='0.03'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .cert-inner { border: 1px solid rgba(0,242,255,0.25); padding: 40px; position: relative; }
+
+        .cert-logo-area { margin-bottom: 20px; }
+        .cert-logo-icon { width: 60px; height: 60px; border: 2px solid var(--neon-cyan); border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; font-size: 24px; color: var(--neon-cyan); margin-bottom: 8px; box-shadow: 0 0 20px rgba(0,242,255,0.3); }
+        .cert-logo-text { font-size: 13px; font-weight: 700; color: #94a3b8; letter-spacing: 3px; text-transform: uppercase; }
+
+        .cert-title { font-size: 28px; font-weight: 800; color: var(--neon-cyan); text-transform: uppercase; letter-spacing: 4px; margin: 20px 0 8px; text-shadow: 0 0 20px rgba(0,242,255,0.5); }
+        .cert-subtitle { font-size: 11px; color: #64748b; letter-spacing: 3px; text-transform: uppercase; margin-bottom: 25px; }
+
+        .cert-certifies { font-size: 12px; color: #64748b; letter-spacing: 2px; text-transform: uppercase; margin-bottom: 8px; }
+        .cert-name { font-size: 42px; font-weight: 800; color: white; text-transform: uppercase; letter-spacing: 3px; margin: 8px 0 20px; text-shadow: 0 0 30px rgba(255,255,255,0.3); }
+
+        .cert-desc { font-size: 12px; color: #64748b; line-height: 1.8; max-width: 580px; margin: 0 auto 30px; }
+
+        .cert-position-label { font-size: 10px; color: var(--neon-cyan); letter-spacing: 3px; text-transform: uppercase; margin-bottom: 8px; }
+        .cert-position-value { font-size: 14px; font-weight: 700; color: white; letter-spacing: 1px; margin-bottom: 30px; }
+
+        .cert-footer { display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid rgba(0,242,255,0.2); padding-top: 25px; margin-top: 10px; }
+        .cert-footer-item { text-align: center; }
+        .cert-footer-label { font-size: 9px; color: #475569; text-transform: uppercase; letter-spacing: 2px; display: block; margin-bottom: 6px; }
+        .cert-footer-val { font-size: 12px; font-weight: 700; color: #94a3b8; }
+        .cert-footer-sig { font-family: cursive; font-size: 22px; color: var(--neon-cyan); }
+
+        /* Corner decorations */
+        .cert-corner { position: absolute; width: 20px; height: 20px; border-color: var(--neon-cyan); border-style: solid; }
+        .cert-corner.tl { top: -1px; left: -1px; border-width: 3px 0 0 3px; }
+        .cert-corner.tr { top: -1px; right: -1px; border-width: 3px 3px 0 0; }
+        .cert-corner.bl { bottom: -1px; left: -1px; border-width: 0 0 3px 3px; }
+        .cert-corner.br { bottom: -1px; right: -1px; border-width: 0 3px 3px 0; }
+
+        /* Share Section */
+        .cert-actions { margin-top: 30px; display: flex; flex-direction: column; align-items: center; gap: 15px; }
+        .share-title { font-size: 11px; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; }
+
+        .share-tags { display: flex; gap: 12px; align-items: center; }
+        .share-tag-item { display: flex; align-items: center; gap: 8px; background: rgba(0,242,255,0.05); border: 1px solid rgba(0,242,255,0.2); border-radius: 10px; padding: 10px 16px; }
+        .share-tag-text { font-size: 13px; color: var(--neon-cyan); font-weight: 700; }
+        .copy-btn { background: none; border: 1px solid #1e293b; color: #64748b; padding: 6px 10px; border-radius: 8px; cursor: pointer; font-size: 11px; transition: 0.3s; display: flex; align-items: center; gap: 5px; }
+        .copy-btn:hover { border-color: var(--neon-cyan); color: var(--neon-cyan); }
+        .copy-btn.copied { border-color: #4ade80; color: #4ade80; }
+
+        .share-platforms { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+        .share-platform-btn { display: flex; align-items: center; gap: 8px; padding: 10px 18px; border-radius: 10px; border: 1px solid #1e293b; background: #0a0e14; color: white; font-size: 12px; font-weight: 700; cursor: pointer; transition: 0.3s; text-decoration: none; font-family: inherit; }
+        .share-platform-btn:hover { border-color: var(--neon-cyan); color: var(--neon-cyan); }
+        .share-platform-btn i { font-size: 16px; }
+
+        .btn-back { margin-top: 10px; background: transparent; color: var(--text-muted); border: 1px solid #1e293b; padding: 12px 30px; border-radius: 10px; font-size: 12px; cursor: pointer; transition: 0.3s; font-family: inherit; }
+        .btn-back:hover { border-color: #475569; color: white; }
+
+        /* Footer */
         footer { background: #020617; padding: 80px 60px 0; border-top: 1px solid var(--border-glass); }
         .footer-grid { display: grid; grid-template-columns: 1.6fr 1fr 1fr 1fr; gap: 60px; padding-bottom: 60px; }
         .f-col h4 { color: var(--neon-cyan); font-size: 12px; text-transform: uppercase; margin-bottom: 25px; letter-spacing: 1.5px; }
@@ -245,28 +247,20 @@
         .f-col ul li { margin-bottom: 14px; }
         .f-col ul li a { color: #64748b; text-decoration: none; font-size: 13px; transition: 0.3s; display: flex; align-items: center; gap: 8px; }
         .f-col ul li a:hover { color: var(--neon-cyan); padding-left: 4px; }
-        .f-col ul li .coming-soon { font-size: 9px; background: rgba(0,242,255,0.1); color: var(--neon-cyan); padding: 2px 8px; border-radius: 20px; letter-spacing: 1px; }
+        .coming-soon { font-size: 9px; background: rgba(0,242,255,0.1); color: var(--neon-cyan); padding: 2px 8px; border-radius: 20px; letter-spacing: 1px; }
         .footer-social { display: flex; gap: 10px; margin-top: 25px; flex-wrap: wrap; }
         .footer-social a { width: 40px; height: 40px; border-radius: 10px; background: rgba(255,255,255,0.03); border: 1px solid var(--border-glass); display: flex; align-items: center; justify-content: center; color: #94a3b8; text-decoration: none; transition: 0.3s; font-size: 16px; }
         .footer-social a:hover { border-color: var(--neon-cyan); color: var(--neon-cyan); transform: translateY(-3px); }
         .discord-btn { margin-top: 18px; display: inline-flex; align-items: center; gap: 8px; background: rgba(88,101,242,0.1); border: 1px solid rgba(88,101,242,0.4); color: #7289da; padding: 10px 18px; border-radius: 10px; font-size: 12px; font-weight: 700; text-decoration: none; transition: 0.3s; }
-        .discord-btn:hover { background: rgba(88,101,242,0.2); border-color: #7289da; }
+        .discord-btn:hover { background: rgba(88,101,242,0.2); }
         .trust-badges { margin-top: 20px; display: flex; flex-direction: column; gap: 10px; }
         .trust-badge { display: flex; align-items: center; gap: 10px; font-size: 12px; color: #64748b; }
         .trust-badge i { color: var(--neon-cyan); width: 16px; }
-
-        /* Bottom Bar */
-        .footer-bottom {
-            border-top: 1px solid #1e293b; padding: 25px 0;
-            display: grid; grid-template-columns: 1fr 1fr 1fr;
-            align-items: center; font-size: 11px; color: #475569;
-        }
+        .footer-bottom { border-top: 1px solid #1e293b; padding: 25px 0; display: grid; grid-template-columns: 1fr 1fr 1fr; align-items: center; font-size: 11px; color: #475569; }
         .footer-bottom .center { text-align: center; }
         .footer-bottom .right { text-align: right; }
         .kinan-tag { color: var(--neon-cyan); text-decoration: none; font-weight: 600; }
         .status-dot { height: 8px; width: 8px; background-color: #00ff88; border-radius: 50%; display: inline-block; margin-right: 6px; box-shadow: 0 0 8px #00ff88; }
-        .global-traffic { color: #94a3b8; }
-        .global-traffic span { color: var(--neon-cyan); font-weight: 700; }
     </style>
 </head>
 <body>
@@ -310,40 +304,23 @@
             <div class="search-results" id="searchResults"></div>
         </div>
         <div class="metrics">
-            <div class="metric-item">
-                <span class="label">Total Visitors</span>
-                <span class="val" id="visitorsCount">...</span>
-            </div>
-            <div class="metric-item">
-                <span class="label">Available Pixels</span>
-                <span class="val" id="pixelsCount">...</span>
-            </div>
-            <div class="metric-item">
-                <span class="label">Current Price</span>
-                <span class="val">$1.00 <span style="font-size:14px; color:#475569;">/ px</span></span>
-            </div>
+            <div class="metric-item"><span class="label">Total Visitors</span><span class="val" id="visitorsCount">...</span></div>
+            <div class="metric-item"><span class="label">Available Pixels</span><span class="val" id="pixelsCount">...</span></div>
+            <div class="metric-item"><span class="label">Current Price</span><span class="val">$1.00 <span style="font-size:14px;color:#475569;">/ px</span></span></div>
         </div>
     </div>
 
-    <!-- Grid -->
     <div class="grid-wrapper" id="gridWrapper">
         <img src="https://raw.githubusercontent.com/kinan-creator/the-global-screen/main/the-global-screen%20(2).png" id="gridImage" alt="The Global Screen Grid">
     </div>
 
-    <!-- Block Popup -->
     <div class="block-popup" id="blockPopup">
         <div class="popup-header">
-            <div>
-                <div class="popup-name" id="popupName">—</div>
-                <div class="popup-id" id="popupId">—</div>
-            </div>
+            <div><div class="popup-name" id="popupName">—</div><div class="popup-id" id="popupId">—</div></div>
             <button class="popup-close" id="popupClose"><i class="fa-solid fa-xmark"></i></button>
         </div>
         <img class="popup-img" id="popupImg" src="" alt="">
-        <a class="popup-link" id="popupLink" href="#" target="_blank">
-            <i class="fa-solid fa-arrow-up-right-from-square"></i>
-            <span id="popupLinkText">—</span>
-        </a>
+        <a class="popup-link" id="popupLink" href="#" target="_blank"><i class="fa-solid fa-arrow-up-right-from-square"></i><span id="popupLinkText">—</span></a>
         <div class="popup-stats">
             <div class="popup-stat"><span class="popup-stat-label">Clicks</span><span class="popup-stat-val" id="popupClicks">0</span></div>
             <div class="popup-stat"><span class="popup-stat-label">Size</span><span class="popup-stat-val" id="popupSize">—</span></div>
@@ -352,10 +329,7 @@
     </div>
 
     <div class="interaction-area">
-        <div class="trending-pill">
-            <i class="fa-solid fa-fire-flame-curved"></i>
-            <span id="trendingText">TOP 25 MOST CLICKED SPACES</span>
-        </div>
+        <div class="trending-pill"><i class="fa-solid fa-fire-flame-curved"></i><span id="trendingText">TOP 25 MOST CLICKED SPACES</span></div>
         <button class="btn-claim" id="openModal">Claim Your Spot Now</button>
     </div>
 
@@ -364,7 +338,7 @@
         <div class="modal-content">
             <div id="step1">
                 <h2>Account Access</h2>
-                <p>Sign in to claim your spot on the global grid</p>
+                <p class="sub">Sign in to claim your spot on the global grid</p>
                 <button class="btn-google" id="btnGoogle"><i class="fa-brands fa-google" style="color:#4285F4;"></i> Continue with Google</button>
                 <div class="divider">OR</div>
                 <input type="email" id="emailInput" placeholder="Email Address">
@@ -372,18 +346,37 @@
                 <div class="error-msg" id="authError"></div>
                 <div class="success-msg" id="authSuccess"></div>
                 <button class="btn-submit" id="btnEmailLogin">Login with Email</button>
-                <button class="btn-submit" style="background:transparent;color:var(--neon-cyan);border:2px solid var(--neon-cyan);margin-top:10px;" id="btnEmailRegister">Create Account</button>
+                <button class="btn-submit" style="background:transparent;color:var(--neon-cyan);border:2px solid var(--neon-cyan);margin-top:8px;" id="btnEmailRegister">Create Account</button>
             </div>
+
             <div id="step2" style="display:none;">
                 <h2>Claim Your Spot</h2>
-                <p>Fill in your details to complete ownership</p>
+                <p class="sub">Fill in your details to complete ownership</p>
                 <input type="text" id="userName" placeholder="Your Full Name">
                 <input type="text" id="userLink" placeholder="Website or Social Link">
                 <label class="upload-label" for="fileInput"><i class="fa-solid fa-cloud-arrow-up"></i>Upload Your Image</label>
                 <input type="file" id="fileInput" accept="image/*">
                 <div id="fileName"></div>
+
+                <!-- Location Selector -->
+                <div class="location-selector">
+                    <label>Choose Your Location</label>
+                    <div class="location-options">
+                        <button class="loc-btn active" data-sector="Edges" data-price="0.5" onclick="selectSector(this)">
+                            Edges<span class="loc-price">$0.50/px</span>
+                        </button>
+                        <button class="loc-btn" data-sector="Near Center" data-price="1" onclick="selectSector(this)">
+                            Near Center<span class="loc-price">$1.00/px</span>
+                        </button>
+                        <button class="loc-btn" data-sector="The Core" data-price="2" onclick="selectSector(this)">
+                            The Core<span class="loc-price">$2.00/px</span>
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Pixel Size -->
                 <div class="pixel-size-box">
-                    <label>Select Your Space Size (min 10×10)</label>
+                    <label>Space Size (min 10×10)</label>
                     <div class="size-inputs">
                         <input type="number" id="pixelW" placeholder="W" value="10">
                         <span>×</span>
@@ -392,10 +385,12 @@
                     </div>
                     <div class="pixel-summary">
                         <div class="ps-item"><span class="ps-label">Total Pixels</span><span class="ps-val" id="totalPixels">100</span></div>
-                        <div class="ps-item"><span class="ps-label">Price</span><span class="ps-val" id="totalPrice">$100</span></div>
-                        <div class="ps-item"><span class="ps-label">Size</span><span class="ps-val" id="sizeLabel">10×10</span></div>
+                        <div class="ps-item"><span class="ps-label">Price/px</span><span class="ps-val" id="pricePerPx">$0.50</span></div>
+                        <div class="ps-item"><span class="ps-label">Total Price</span><span class="ps-val" id="totalPrice">$50</span></div>
                     </div>
                 </div>
+
+                <!-- Payment -->
                 <div class="payment-section">
                     <p>Choose Payment Method</p>
                     <div class="payment-btns">
@@ -403,6 +398,11 @@
                         <button class="pay-btn stripe" id="btnStripe"><i class="fa-brands fa-stripe"></i> Stripe</button>
                     </div>
                 </div>
+
+                <div class="processing-note">
+                    <strong>Processing Time:</strong> Your space will go live within <strong>5–10 minutes</strong> after payment. If you experience any delay, please contact our <a href="/support.html" style="color:var(--neon-cyan);">Support Team</a>.
+                </div>
+
                 <div class="error-msg" id="claimError"></div>
             </div>
         </div>
@@ -412,23 +412,69 @@
     <div id="certView">
         <div class="cert-card">
             <div class="cert-inner">
-                <p style="letter-spacing:8px;color:#475569;font-size:12px;">OFFICIAL DIGITAL ASSET CERTIFICATE</p>
-                <div class="cert-user" id="targetName">USER NAME</div>
-                <p style="color:#94a3b8;max-width:500px;margin:0 auto;line-height:1.6;">This document verifies ownership in the premium advertising grid of The Global Screen.</p>
-                <div style="margin-top:70px;display:flex;justify-content:space-around;font-size:12px;color:#475569;">
-                    <div>CERTIFICATE ID<br><span style="color:white;font-weight:700;" id="certId">#2026-TGS-10001</span></div>
-                    <div>ISSUED BY<br><span style="font-family:cursive;color:var(--neon-cyan);font-size:20px;">Kinan Alslman</span></div>
-                    <div>DATE<br><span style="color:white;font-weight:700;">OCTOBER 26, 2026</span></div>
+                <div class="cert-corner tl"></div>
+                <div class="cert-corner tr"></div>
+                <div class="cert-corner bl"></div>
+                <div class="cert-corner br"></div>
+
+                <div class="cert-logo-area">
+                    <div class="cert-logo-icon"><i class="fa-solid fa-globe"></i></div>
+                    <div class="cert-logo-text">The Global Screen</div>
+                </div>
+
+                <div class="cert-title">The Eternal Digital Legacy</div>
+                <div class="cert-subtitle">Official Ownership Certificate</div>
+
+                <div class="cert-certifies">This certifies that</div>
+                <div class="cert-name" id="targetName">USER NAME</div>
+
+                <div class="cert-desc">The Eternal Digital Legacy of <span id="certNameInDesc">USER NAME</span> has been immortalized on The Global Screen, representing an enduring contribution to the history of digital expression. This unique digital space, located within the secure core of The Global Screen, will remain as a testament to their presence in the digital age.</div>
+
+                <div class="cert-position-label">Screen Position</div>
+                <div class="cert-position-value" id="certPosition">—</div>
+
+                <div class="cert-footer">
+                    <div class="cert-footer-item">
+                        <span class="cert-footer-label">Block ID</span>
+                        <span class="cert-footer-val" id="certId">—</span>
+                    </div>
+                    <div class="cert-footer-item">
+                        <span class="cert-footer-label">Issued By</span>
+                        <span class="cert-footer-sig">Kinan Alslman</span>
+                    </div>
+                    <div class="cert-footer-item">
+                        <span class="cert-footer-label">Date</span>
+                        <span class="cert-footer-val" id="certDate">—</span>
+                    </div>
                 </div>
             </div>
         </div>
-        <button class="btn-claim" style="margin-top:40px;padding:15px 50px;font-size:14px;" onclick="location.reload()">Back to Grid</button>
+
+        <div class="cert-actions">
+            <div class="share-title">Share Your Achievement</div>
+            <div class="share-tags">
+                <div class="share-tag-item">
+                    <span class="share-tag-text">@kinan_h_alsalman</span>
+                    <button class="copy-btn" onclick="copyText('@kinan_h_alsalman', this)"><i class="fa-solid fa-copy"></i> Copy</button>
+                </div>
+                <div class="share-tag-item">
+                    <span class="share-tag-text">#TheGlobalScreen</span>
+                    <button class="copy-btn" onclick="copyText('#TheGlobalScreen', this)"><i class="fa-solid fa-copy"></i> Copy</button>
+                </div>
+            </div>
+            <div class="share-platforms">
+                <button class="share-platform-btn" onclick="shareToTwitter()"><i class="fa-brands fa-x-twitter"></i> Share on X</button>
+                <button class="share-platform-btn" onclick="shareToFacebook()"><i class="fa-brands fa-facebook-f"></i> Share on Facebook</button>
+                <button class="share-platform-btn" onclick="shareToWhatsapp()"><i class="fa-brands fa-whatsapp"></i> Share on WhatsApp</button>
+                <button class="share-platform-btn" onclick="shareToTelegram()"><i class="fa-brands fa-telegram"></i> Share on Telegram</button>
+            </div>
+            <button class="btn-back" onclick="location.reload()">Back to Grid</button>
+        </div>
     </div>
 
     <!-- Footer -->
     <footer>
         <div class="footer-grid">
-            <!-- Col 1: Brand -->
             <div class="f-col">
                 <div class="logo"><span>The</span> Global Screen</div>
                 <p>The world's first decentralized pixel grid. Own your space, drive traffic, and secure your digital legacy.</p>
@@ -440,11 +486,8 @@
                     <a href="https://www.linkedin.com/in/kinan-alslman-a02952281" target="_blank"><i class="fa-brands fa-linkedin-in"></i></a>
                     <a href="https://www.reddit.com/u/Both-Abalone4350/s/brbbQ0AQWi" target="_blank"><i class="fa-brands fa-reddit-alien"></i></a>
                 </div>
-                <a href="https://t.me/theglobalscreen" target="_blank" class="discord-btn">
-                    <i class="fa-brands fa-telegram"></i> Join Our Community
-                </a>
+                <a href="https://t.me/theglobalscreen" target="_blank" class="discord-btn"><i class="fa-brands fa-telegram"></i> Join Our Community</a>
             </div>
-            <!-- Col 2: Global Insights -->
             <div class="f-col">
                 <h4>Global Insights</h4>
                 <ul>
@@ -453,7 +496,6 @@
                     <li><a href="#">Resale Marketplace <span class="coming-soon">SOON</span></a></li>
                 </ul>
             </div>
-            <!-- Col 3: Help Center -->
             <div class="f-col">
                 <h4>Help Center</h4>
                 <ul>
@@ -462,7 +504,6 @@
                     <li><a href="/support.html">Direct Support</a></li>
                 </ul>
             </div>
-            <!-- Col 4: Legal & Trust -->
             <div class="f-col">
                 <h4>Legal</h4>
                 <ul>
@@ -478,7 +519,7 @@
         </div>
         <div class="footer-bottom">
             <div>&copy; 2026 The Global Screen. Managed by <a href="#" class="kinan-tag">Kinan Alslman</a>.</div>
-            <div class="center global-traffic">Global Traffic: <span id="totalClicksDisplay">0</span> Clicks Delivered</div>
+            <div class="center" style="color:#94a3b8;">Global Traffic: <span style="color:var(--neon-cyan);font-weight:700;" id="totalClicksDisplay">0</span> Clicks Delivered</div>
             <div class="right"><span class="status-dot"></span> System Status: <span style="color:#00ff88;">Operational</span></div>
         </div>
     </footer>
@@ -493,15 +534,18 @@
 
         const GRID_SIZE = 3000;
         let allBlocks = [];
+        let currentSector = 'Edges';
+        let currentPricePerPx = 0.5;
+        let currentCertData = {};
 
-        // ====== FOLLOW US DROPDOWN ======
+        // ====== FOLLOW DROPDOWN ======
         document.getElementById('followBtn').addEventListener('click', (e) => {
             e.preventDefault();
             document.getElementById('followDropdown').classList.toggle('open');
         });
         document.addEventListener('click', (e) => {
-            const fw = document.querySelector('.follow-wrapper');
-            if (!fw.contains(e.target)) document.getElementById('followDropdown').classList.remove('open');
+            if (!document.querySelector('.follow-wrapper').contains(e.target))
+                document.getElementById('followDropdown').classList.remove('open');
         });
 
         // ====== COUNTERS ======
@@ -532,10 +576,8 @@
             const wrapper = document.getElementById('gridWrapper');
             const img = document.getElementById('gridImage');
             wrapper.querySelectorAll('.block-overlay').forEach(el => el.remove());
-            const imgW = img.offsetWidth;
-            const imgH = img.offsetHeight;
-            const scaleX = imgW / GRID_SIZE;
-            const scaleY = imgH / GRID_SIZE;
+            const scaleX = img.offsetWidth / GRID_SIZE;
+            const scaleY = img.offsetHeight / GRID_SIZE;
             allBlocks.forEach(block => {
                 if (block.pos_x === null || block.pos_x === undefined) return;
                 const el = document.createElement('div');
@@ -565,12 +607,9 @@
             document.getElementById('popupPixels').textContent  = (block.total_pixels||'?').toLocaleString();
             const popup = document.getElementById('blockPopup');
             popup.style.display = 'block';
-            const px = Math.min(e.clientX + 15, window.innerWidth - 330);
-            const py = Math.min(e.clientY - 20, window.innerHeight - 400);
-            popup.style.left = px + 'px';
-            popup.style.top  = py + 'px';
-            updateTrending();
-            updateTotalClicks();
+            popup.style.left = Math.min(e.clientX + 15, window.innerWidth - 330) + 'px';
+            popup.style.top  = Math.min(e.clientY - 20, window.innerHeight - 400) + 'px';
+            updateTrending(); updateTotalClicks();
         }
 
         document.getElementById('popupClose').onclick = () => document.getElementById('blockPopup').style.display = 'none';
@@ -579,16 +618,15 @@
             if (popup.style.display === 'block' && !popup.contains(e.target)) popup.style.display = 'none';
         });
 
-        // ====== TOP 25 TRENDING ======
+        // ====== TRENDING ======
         function updateTrending() {
             const sorted = [...allBlocks].sort((a,b) => (b.clicks||0) - (a.clicks||0)).slice(0,25);
             if (!sorted.length) return;
-            const text = sorted.map((b,i) => `${i+1}. ${b.user_name||'—'} (${b.clicks||0})`).join('  ·  ');
-            document.getElementById('trendingText').textContent = text;
+            document.getElementById('trendingText').textContent = sorted.map((b,i) => `${i+1}. ${b.user_name||'—'} (${b.clicks||0})`).join('  ·  ');
         }
 
         function updateTotalClicks() {
-            const total = allBlocks.reduce((sum, b) => sum + (b.clicks||0), 0);
+            const total = allBlocks.reduce((sum,b) => sum + (b.clicks||0), 0);
             document.getElementById('totalClicksDisplay').textContent = total.toLocaleString();
         }
 
@@ -598,16 +636,9 @@
         searchInput.addEventListener('input', () => {
             const q = searchInput.value.trim().toLowerCase();
             if (!q) { searchResults.style.display = 'none'; return; }
-            const matches = allBlocks.filter(b =>
-                (b.user_name && b.user_name.toLowerCase().includes(q)) || String(b.id).includes(q)
-            ).slice(0,8);
+            const matches = allBlocks.filter(b => (b.user_name && b.user_name.toLowerCase().includes(q)) || String(b.id).includes(q)).slice(0,8);
             if (!matches.length) { searchResults.style.display = 'none'; return; }
-            searchResults.innerHTML = matches.map(b => `
-                <div class="search-result-item" data-id="${b.id}">
-                    <div class="sri-name">${b.user_name||'Unknown'}</div>
-                    <div class="sri-id">#2026-TGS-${String(b.id).padStart(5,'0')}</div>
-                </div>
-            `).join('');
+            searchResults.innerHTML = matches.map(b => `<div class="search-result-item" data-id="${b.id}"><div class="sri-name">${b.user_name||'Unknown'}</div><div class="sri-id">#2026-TGS-${String(b.id).padStart(5,'0')}</div></div>`).join('');
             searchResults.style.display = 'block';
             searchResults.querySelectorAll('.search-result-item').forEach(item => {
                 item.onclick = () => {
@@ -626,9 +657,7 @@
                 };
             });
         });
-        document.addEventListener('click', (e) => {
-            if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) searchResults.style.display = 'none';
-        });
+        document.addEventListener('click', (e) => { if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) searchResults.style.display = 'none'; });
 
         window.addEventListener('resize', renderOverlays);
         document.getElementById('gridImage').addEventListener('load', renderOverlays);
@@ -687,20 +716,32 @@
             if (error) showError(authError, error.message); else showSuccess(authSuccess, 'Account created! Check your email to confirm, then login.');
         };
 
+        // ====== SECTOR SELECTOR ======
+        function selectSector(btn) {
+            document.querySelectorAll('.loc-btn').forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            currentSector = btn.dataset.sector;
+            currentPricePerPx = parseFloat(btn.dataset.price);
+            updatePixelCalc();
+        }
+
+        // ====== PIXEL CALC ======
         function updatePixelCalc() {
             let w = parseInt(document.getElementById('pixelW').value) || 10;
             let h = parseInt(document.getElementById('pixelH').value) || 10;
             if (w < 10) { w = 10; document.getElementById('pixelW').value = 10; }
             if (h < 10) { h = 10; document.getElementById('pixelH').value = 10; }
             const total = w * h;
+            const price = total * currentPricePerPx;
             document.getElementById('totalPixels').textContent = total.toLocaleString();
-            document.getElementById('totalPrice').textContent  = '$' + total.toLocaleString();
-            document.getElementById('sizeLabel').textContent   = w + '×' + h;
+            document.getElementById('pricePerPx').textContent  = '$' + currentPricePerPx.toFixed(2);
+            document.getElementById('totalPrice').textContent  = '$' + price.toLocaleString();
         }
         document.getElementById('pixelW').addEventListener('blur', updatePixelCalc);
         document.getElementById('pixelH').addEventListener('blur', updatePixelCalc);
         fileInput.onchange = () => { if (fileInput.files[0]) fileName.textContent = '✓ ' + fileInput.files[0].name; };
 
+        // ====== CLAIM ======
         document.getElementById('btnPaypal').onclick = () => processClaim('PayPal');
         document.getElementById('btnStripe').onclick = () => processClaim('Stripe');
 
@@ -711,33 +752,89 @@
             let w = parseInt(document.getElementById('pixelW').value) || 10;
             let h = parseInt(document.getElementById('pixelH').value) || 10;
             if (w < 10) w = 10; if (h < 10) h = 10;
-            const totalPixels = w * h, totalPrice = totalPixels;
+            const totalPixels = w * h;
+            const totalPrice  = totalPixels * currentPricePerPx;
+
             if (!name) return showError(claimError, 'Please enter your name.');
             if (!file) return showError(claimError, 'Please upload an image.');
+
             document.getElementById('btnPaypal').disabled = true;
             document.getElementById('btnStripe').disabled = true;
+
             const fileExt = file.name.split('.').pop();
             const filePath = `${Date.now()}-${Math.random().toString(36).slice(2)}.${fileExt}`;
             const { error: uploadError } = await sb.storage.from('pixel-images').upload(filePath, file);
-            if (uploadError) { document.getElementById('btnPaypal').disabled = false; document.getElementById('btnStripe').disabled = false; return showError(claimError, 'Image upload failed: ' + uploadError.message); }
+            if (uploadError) {
+                document.getElementById('btnPaypal').disabled = false;
+                document.getElementById('btnStripe').disabled = false;
+                return showError(claimError, 'Image upload failed: ' + uploadError.message);
+            }
+
             const { data: urlData } = sb.storage.from('pixel-images').getPublicUrl(filePath);
             const imageUrl = urlData.publicUrl;
-            const { data: inserted, error: dbError } = await sb.from('blocks').insert([{ user_name: name, pixel_link: link, image_url: imageUrl, width: w, height: h, total_pixels: totalPixels, total_price: totalPrice, payment: paymentMethod, clicks: 0 }]).select().single();
-            if (dbError) { document.getElementById('btnPaypal').disabled = false; document.getElementById('btnStripe').disabled = false; return showError(claimError, 'Save failed: ' + dbError.message); }
+
+            const { data: inserted, error: dbError } = await sb.from('blocks').insert([{
+                user_name: name, pixel_link: link, image_url: imageUrl,
+                width: w, height: h, total_pixels: totalPixels,
+                total_price: totalPrice, payment: paymentMethod,
+                clicks: 0, grid_sector: currentSector
+            }]).select().single();
+
+            if (dbError) {
+                document.getElementById('btnPaypal').disabled = false;
+                document.getElementById('btnStripe').disabled = false;
+                return showError(claimError, 'Save failed: ' + dbError.message);
+            }
+
             const { data: pp } = await sb.from('pixels').select('count').eq('id',1).single();
             if (pp) await sb.from('pixels').update({ count: pp.count - totalPixels }).eq('id',1);
             loadCounters();
+
             const { data: { user } } = await sb.auth.getUser();
-            const certId = '#2026-TGS-' + String(inserted.id).padStart(5,'0');
-            await emailjs.send('service_26ecvjv', 'template_t250i1z', { user_name: name, user_email: user ? user.email : 'Unknown', user_link: link, width: w, height: h, total_pixels: totalPixels, total_price: '$' + totalPrice, image_url: imageUrl });
-            document.getElementById('targetName').innerText = name.toUpperCase();
-            document.getElementById('certId').textContent   = certId;
+            const certId   = '#2026-TGS-' + String(inserted.id).padStart(5,'0');
+            const certDate = new Date().toLocaleDateString('en-US', { year: 'numeric', month: 'long', day: 'numeric' }).toUpperCase();
+
+            await emailjs.send('service_26ecvjv', 'template_t250i1z', {
+                user_name: name, user_email: user ? user.email : 'Unknown',
+                user_link: link, width: w, height: h,
+                total_pixels: totalPixels, total_price: '$' + totalPrice,
+                image_url: imageUrl
+            });
+
+            // Show Certificate
+            document.getElementById('targetName').innerText     = name.toUpperCase();
+            document.getElementById('certNameInDesc').innerText = name.toUpperCase();
+            document.getElementById('certId').textContent       = certId;
+            document.getElementById('certDate').textContent     = certDate;
+            document.getElementById('certPosition').textContent = `${currentSector} — Grid Sector Alpha-${inserted.id}`;
+
+            currentCertData = { name, certId, certDate, sector: currentSector, link };
+
             overlay.style.display = 'none';
             document.getElementById('certView').style.display = 'flex';
             allBlocks.push(inserted); renderOverlays();
         }
 
+        // ====== SHARE FUNCTIONS ======
+        function getShareText() {
+            return `I just claimed my space on The Global Screen! 🌐\n${currentCertData.certId} — ${currentCertData.sector}\n@kinan_h_alsalman #TheGlobalScreen\nhttps://the-global-screen.vercel.app`;
+        }
+
+        function shareToTwitter() { window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(getShareText())}`, '_blank'); }
+        function shareToFacebook() { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://the-global-screen.vercel.app')}`, '_blank'); }
+        function shareToWhatsapp() { window.open(`https://wa.me/?text=${encodeURIComponent(getShareText())}`, '_blank'); }
+        function shareToTelegram() { window.open(`https://t.me/share/url?url=${encodeURIComponent('https://the-global-screen.vercel.app')}&text=${encodeURIComponent(getShareText())}`, '_blank'); }
+
+        function copyText(text, btn) {
+            navigator.clipboard.writeText(text).then(() => {
+                btn.innerHTML = '<i class="fa-solid fa-check"></i> Copied!';
+                btn.classList.add('copied');
+                setTimeout(() => { btn.innerHTML = '<i class="fa-solid fa-copy"></i> Copy'; btn.classList.remove('copied'); }, 2000);
+            });
+        }
+
         document.getElementById('logoutBtn').onclick = async () => { await sb.auth.signOut(); };
+
         function showError(el, msg) { el.textContent = msg; el.style.display = 'block'; setTimeout(() => el.style.display = 'none', 5000); }
         function showSuccess(el, msg) { el.textContent = msg; el.style.display = 'block'; }
         function setBtnLoading(id, loading) { const btn = document.getElementById(id); btn.disabled = loading; btn.textContent = loading ? 'Please wait...' : btn.dataset.label || btn.textContent; }
@@ -745,4 +842,4 @@
         loadCounters(); trackVisit(); loadBlocks();
     </script>
 </body>
-    </html>
+</html>
