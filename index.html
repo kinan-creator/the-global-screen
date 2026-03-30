@@ -462,11 +462,11 @@
                     <button class="copy-btn" onclick="copyText('#TheGlobalScreen', this)"><i class="fa-solid fa-copy"></i> Copy</button>
                 </div>
             </div>
+            <!-- Replaced all platform share buttons with a single Share button -->
             <div class="share-platforms">
-                <button class="share-platform-btn" onclick="shareToTwitter()"><i class="fa-brands fa-x-twitter"></i> Share on X</button>
-                <button class="share-platform-btn" onclick="shareToFacebook()"><i class="fa-brands fa-facebook-f"></i> Share on Facebook</button>
-                <button class="share-platform-btn" onclick="shareToWhatsapp()"><i class="fa-brands fa-whatsapp"></i> Share on WhatsApp</button>
-                <button class="share-platform-btn" onclick="shareToTelegram()"><i class="fa-brands fa-telegram"></i> Share on Telegram</button>
+                <button class="share-platform-btn" onclick="shareCert()">
+                    <i class="fa-solid fa-share-nodes"></i> Share Your Certificate
+                </button>
             </div>
             <button class="btn-back" onclick="location.reload()">Back to Grid</button>
         </div>
@@ -820,6 +820,25 @@
             return `I just claimed my space on The Global Screen! 🌐\n${currentCertData.certId} — ${currentCertData.sector}\n@kinan_h_alsalman #TheGlobalScreen\nhttps://the-global-screen.vercel.app`;
         }
 
+        // New unified share function (replaces downloadCert)
+        async function shareCert() {
+            const { default: html2canvas } = await import('https://cdn.jsdelivr.net/npm/html2canvas@1.4.1/dist/html2canvas.esm.js');
+            const canvas = await html2canvas(document.querySelector('.cert-card'), { backgroundColor: '#040d1a', scale: 2 });
+            canvas.toBlob(async (blob) => {
+                const file = new File([blob], 'GlobalScreen-Certificate.png', { type: 'image/png' });
+                const shareText = getShareText();
+                if (navigator.share && navigator.canShare({ files: [file] })) {
+                    await navigator.share({ files: [file], title: 'My Global Screen Certificate', text: shareText });
+                } else {
+                    const link = document.createElement('a');
+                    link.download = 'GlobalScreen-Certificate.png';
+                    link.href = canvas.toDataURL();
+                    link.click();
+                }
+            });
+        }
+
+        // Keep old share functions (if needed elsewhere, but not used in UI now)
         function shareToTwitter() { window.open(`https://twitter.com/intent/tweet?text=${encodeURIComponent(getShareText())}`, '_blank'); }
         function shareToFacebook() { window.open(`https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent('https://the-global-screen.vercel.app')}`, '_blank'); }
         function shareToWhatsapp() { window.open(`https://wa.me/?text=${encodeURIComponent(getShareText())}`, '_blank'); }
@@ -842,4 +861,4 @@
         loadCounters(); trackVisit(); loadBlocks();
     </script>
 </body>
-</html>
+    </html>
